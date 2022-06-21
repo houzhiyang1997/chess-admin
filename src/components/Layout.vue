@@ -22,6 +22,7 @@
             @close="handleClose"
             :collapse="iscollapse"
             :collapse-transition="false"
+            :unique-opened="true"
             router
           >
             <!-- 一级菜单 -->
@@ -238,11 +239,20 @@ body {
   }
   .el-main {
     background: #eaedf1;
+    padding-top: 0;
+  }
+  // 隐藏滚动条
+  .el-aside::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
   }
   .el-aside {
+    /* 隐藏滚动条 */
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
     height: calc(100vh - 76px);
     background: #5b5c5e;
     transition: all 0.3s;
+
     .col-btn {
       width: calc(100% - 1px);
       background: #5b5c5e;
