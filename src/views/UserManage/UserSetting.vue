@@ -13,10 +13,10 @@
       <el-card>
         <el-row :gutter="20">
           <el-col :span="10">
-            <el-input placeholder="搜索用户名" :prefix-icon="Search" />
+            <el-input placeholder="搜索用户名或昵称" :prefix-icon="Search" v-model="searchContent" />
           </el-col>
           <el-col :span="2">
-            <el-button type="primary">搜索</el-button>
+            <el-button type="primary" @click="handleSearch">搜索</el-button>
           </el-col>
         </el-row>
         <div class="main-table">
@@ -64,11 +64,12 @@ export default {
       userList: [],
       total: 0, // 总条数
       pageNum: 1, // 当前页码数
-      pageSize: 3 // 每页大小
+      pageSize: 3, // 每页大小
+      searchContent: '' // 搜索内容
     })
     // 获取用户列表
     const getUserList = async () => {
-      const { data: res } = await api.getUsers(state.pageNum, state.pageSize)
+      const { data: res } = await api.getUsers(state.pageNum, state.pageSize, state.searchContent)
       console.log(res)
       state.userList = res.users
       state.total = res.total
@@ -83,6 +84,12 @@ export default {
       state.pageNum = val
       getUserList()
     }
+    // 处理搜索
+    const handleSearch = () => {
+      // 搜索后需要重置到第一页
+      state.pageNum = 1
+      getUserList()
+    }
     onMounted(() => {
       getUserList()
     })
@@ -93,7 +100,8 @@ export default {
       ...toRefs(state),
       getUserList,
       handleSizeChange,
-      handleCurrentChange
+      handleCurrentChange,
+      handleSearch
     }
   }
 }

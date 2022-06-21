@@ -1,10 +1,10 @@
 import http from '@/util/http.js'
 
 // 获取全部新闻列表
-const getUsers = (pageNum, pageSize) => {
+const getUsers = (pageNum, pageSize, searchContent) => {
   return http({
     method: 'GET',
-    url: `/getusers?pageNum=${pageNum}&pageSize=${pageSize}`
+    url: `/getusers?pageNum=${pageNum}&pageSize=${pageSize}&searchContent=${searchContent}`
   })
 }
 
