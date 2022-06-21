@@ -252,7 +252,7 @@ body {
     /* 隐藏滚动条 */
     scrollbar-width: none; /* firefox */
     -ms-overflow-style: none; /* IE 10+ */
-    height: calc(100vh - 76px);
+    height: calc(100vh);
     background: #5b5c5e;
     transition: all 0.3s;
 

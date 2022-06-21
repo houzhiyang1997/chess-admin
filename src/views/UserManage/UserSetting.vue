@@ -19,22 +19,36 @@
             <el-button type="primary">搜索</el-button>
           </el-col>
         </el-row>
-        <!-- 主干table -->
-        <el-table :data="userList" stripe border>
-          <el-table-column prop="id" label="序号" width="80" />
-          <el-table-column prop="username" label="用户名" />
-          <el-table-column prop="nickName" label="昵称" />
-          <el-table-column prop="level" label="等级" width="80" />
-          <el-table-column prop="exp" label="经验" width="80" />
-          <el-table-column prop="score" label="积分" width="80" />
-          <el-table-column prop="imgUrl" label="头像地址" :show-overflow-tooltip="true" />
-          <el-table-column label="操作">
-            <template #default>
-              <el-button type="primary" :icon="Edit" size="small">编辑</el-button>
-              <el-button type="danger" :icon="Delete" size="small">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+        <div class="main-table">
+          <!-- 主干table -->
+          <el-table :data="userList" stripe border>
+            <el-table-column prop="id" label="序号" width="80" />
+            <el-table-column prop="username" label="用户名" />
+            <el-table-column prop="nickName" label="昵称" />
+            <el-table-column prop="level" label="等级" width="80" />
+            <el-table-column prop="exp" label="经验" width="80" />
+            <el-table-column prop="score" label="积分" width="80" />
+            <el-table-column prop="imgUrl" label="头像地址" :show-overflow-tooltip="true" />
+            <el-table-column label="操作">
+              <template #default>
+                <el-button type="primary" :icon="Edit" size="small">编辑</el-button>
+                <el-button type="danger" :icon="Delete" size="small">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <!-- 底部分页器 -->
+        <div class="pagination">
+          <el-pagination
+            v-model:currentPage="pageNum"
+            v-model:page-size="pageSize"
+            :page-sizes="[3, 5, 8, 10]"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
       </el-card>
     </div>
   </div>
@@ -48,16 +62,26 @@ export default {
   setup() {
     const state = reactive({
       userList: [],
-      srcList: [
-        'http://game.gtimg.cn/images/lol/act/img/profileicon/4216.png',
-        'http://game.gtimg.cn/images/lol/act/img/profileicon/4216.png',
-        'http://game.gtimg.cn/images/lol/act/img/profileicon/4216.png'
-      ]
+      total: 0, // 总条数
+      pageNum: 1, // 当前页码数
+      pageSize: 3 // 每页大小
     })
+    // 获取用户列表
     const getUserList = async () => {
-      const { data: res } = await api.getUsers()
+      const { data: res } = await api.getUsers(state.pageNum, state.pageSize)
       console.log(res)
       state.userList = res.users
+      state.total = res.total
+    }
+    // 每页大小改变
+    const handleSizeChange = val => {
+      state.pageSize = val
+      getUserList()
+    }
+    // 当前页码改变
+    const handleCurrentChange = val => {
+      state.pageNum = val
+      getUserList()
     }
     onMounted(() => {
       getUserList()
@@ -67,7 +91,9 @@ export default {
       Delete,
       Edit,
       ...toRefs(state),
-      getUserList
+      getUserList,
+      handleSizeChange,
+      handleCurrentChange
     }
   }
 }
@@ -78,8 +104,8 @@ export default {
   .top {
     margin: 10px;
   }
-  .el-row {
-    margin-bottom: 20px;
+  .main-table {
+    margin: 15px 0;
   }
 }
 </style>
