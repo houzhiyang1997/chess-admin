@@ -16,10 +16,9 @@
             active-text-color="#ffd04b"
             background-color="#5b5c5e"
             class="el-menu-vertical-demo"
-            default-active="2"
+            :default-active="activePath"
             text-color="#fff"
-            @open="handleOpen"
-            @close="handleClose"
+            @select="selectItem"
             :collapse="iscollapse"
             :collapse-transition="false"
             :unique-opened="true"
@@ -191,22 +190,26 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { onMounted, reactive, toRefs } from 'vue'
 export default {
   setup() {
     const state = reactive({
-      iscollapse: false
+      iscollapse: false,
+      activePath: ''
     })
-    const handleOpen = (key, keyPath) => {
-      console.log(key, keyPath)
+    onMounted(() => {
+      // 还原刷新前的选中状态
+      state.activePath = window.sessionStorage.getItem('activePath')
+    })
+    const selectItem = index => {
+      // 保存刷新的选中状态
+      window.sessionStorage.setItem('activePath', index)
+      state.activePath = index
     }
-    const handleClose = (key, keyPath) => {
-      console.log(key, keyPath)
-    }
+
     return {
       ...toRefs(state),
-      handleOpen,
-      handleClose
+      selectItem
     }
   }
 }
