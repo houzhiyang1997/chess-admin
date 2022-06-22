@@ -22,11 +22,20 @@ const addUser = formData => {
   })
 }
 
-// 根据id获取新闻详情
-const getDetailById = id => {
+// 修改用户信息
+const editUser = formData => {
+  return http({
+    method: 'POST',
+    url: '/edituser',
+    data: formData
+  })
+}
+
+// 根据id获取用户信息
+const getUserById = id => {
   return http({
     method: 'GET',
-    url: `/newsdetail?id=${id}`
+    url: `/getuserbyid?id=${id}`
   })
 }
 
@@ -45,6 +54,7 @@ const login = (username, password) => {
 export default {
   getUsers,
   addUser,
-  getDetailById,
+  editUser,
+  getUserById,
   login
 }

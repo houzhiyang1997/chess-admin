@@ -221,6 +221,7 @@ body {
   padding: 0;
 }
 .common-layout {
+  height: 100%;
   .el-header {
     color: white;
     background: #5b5c5e;
@@ -243,6 +244,7 @@ body {
   .el-main {
     background: #eaedf1;
     padding-top: 0;
+    height: calc(100vh - 60px);
   }
   // 隐藏滚动条
   .el-aside::-webkit-scrollbar {
@@ -252,10 +254,9 @@ body {
     /* 隐藏滚动条 */
     scrollbar-width: none; /* firefox */
     -ms-overflow-style: none; /* IE 10+ */
-    height: calc(100vh);
+    height: calc(100vh - 60px);
     background: #5b5c5e;
     transition: all 0.3s;
-
     .col-btn {
       width: calc(100% - 1px);
       background: #5b5c5e;
@@ -267,6 +268,7 @@ body {
     }
     .el-menu {
       border: none;
+      height: 100%;
     }
   }
 }
