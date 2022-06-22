@@ -33,7 +33,9 @@
             <el-table-column label="操作">
               <template #default="scope">
                 <el-button type="primary" :icon="Edit" size="small" @click="handleEdit(scope.row.id)">编辑</el-button>
-                <el-button type="danger" :icon="Delete" size="small">删除</el-button>
+                <el-button type="danger" :icon="Delete" size="small" @click="handleDelete(scope.row.id)"
+                  >删除</el-button
+                >
               </template>
             </el-table-column>
           </el-table>
@@ -65,7 +67,7 @@
 <script>
 import AddUser from '@/components/User/AddUser.vue'
 import EditUser from '@/components/User/EditUser.vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
 import { onMounted, reactive, toRefs } from 'vue'
@@ -134,6 +136,40 @@ export default {
         getUserList()
       }
     }
+    // 处理删除
+    const handleDelete = ID => {
+      ElMessageBox.confirm('您确认删除该条数据吗?', '重要提醒', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+        callback: async action => {
+          if (action === 'confirm') {
+            const { data: res } = await api.deleteUser(ID)
+            if (res.count === 1) {
+              ElNotification({
+                title: '成功',
+                message: '删除成功',
+                type: 'success'
+              })
+              getUserList()
+            } else {
+              ElNotification({
+                title: '出错啦',
+                message: '删除失败',
+                type: 'error'
+              })
+            }
+          }
+          if (action === 'cancel') {
+            ElNotification({
+              title: '提示',
+              message: '用户取消',
+              type: 'warning'
+            })
+          }
+        }
+      })
+    }
     onMounted(() => {
       getUserList()
     })
@@ -148,7 +184,8 @@ export default {
       handleSearch,
       closeDialogVisible,
       closeEditDialogVisible,
-      handleEdit
+      handleEdit,
+      handleDelete
     }
   }
 }

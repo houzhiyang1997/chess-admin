@@ -31,6 +31,14 @@ const editUser = formData => {
   })
 }
 
+// 删除用户信息 id
+const deleteUser = id => {
+  return http({
+    method: 'GET',
+    url: `/deleteuser?id=${id}`
+  })
+}
+
 // 根据id获取用户信息
 const getUserById = id => {
   return http({
@@ -55,6 +63,7 @@ export default {
   getUsers,
   addUser,
   editUser,
+  deleteUser,
   getUserById,
   login
 }
