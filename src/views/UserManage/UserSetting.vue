@@ -8,15 +8,16 @@
         <el-breadcrumb-item :to="{ path: '/user-manage/admin' }">管理员设置</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <!-- 顶部 search card -->
     <div class="card">
       <el-card>
+        <!-- 顶部 search card -->
         <el-row :gutter="20">
           <el-col :span="10">
             <el-input placeholder="搜索用户名或昵称" :prefix-icon="Search" v-model="searchContent" />
           </el-col>
-          <el-col :span="2">
+          <el-col :span="4">
             <el-button type="primary" @click="handleSearch">搜索</el-button>
+            <el-button type="warning" @click="centerDialogVisible = true">添加用户</el-button>
           </el-col>
         </el-row>
         <div class="main-table">
@@ -50,22 +51,28 @@
           />
         </div>
       </el-card>
+      <AddUser :centerDialogVisible="centerDialogVisible" @onCloseDialog="closeDialogVisible"></AddUser>
     </div>
   </div>
 </template>
 
 <script>
+import AddUser from '@/components/User/AddUser.vue'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
 import { onMounted, reactive, toRefs } from 'vue'
 export default {
+  components: {
+    AddUser
+  },
   setup() {
     const state = reactive({
       userList: [],
       total: 0, // 总条数
       pageNum: 1, // 当前页码数
       pageSize: 3, // 每页大小
-      searchContent: '' // 搜索内容
+      searchContent: '', // 搜索内容
+      centerDialogVisible: false
     })
     // 获取用户列表
     const getUserList = async () => {
@@ -90,6 +97,10 @@ export default {
       state.pageNum = 1
       getUserList()
     }
+    // 关闭窗口
+    const closeDialogVisible = visible => {
+      state.centerDialogVisible = visible
+    }
     onMounted(() => {
       getUserList()
     })
@@ -101,7 +112,8 @@ export default {
       getUserList,
       handleSizeChange,
       handleCurrentChange,
-      handleSearch
+      handleSearch,
+      closeDialogVisible
     }
   }
 }

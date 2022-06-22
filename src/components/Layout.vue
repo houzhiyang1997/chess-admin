@@ -24,7 +24,7 @@
             :unique-opened="true"
             router
           >
-            <!-- 一级菜单 -->
+            <!-- 主要介绍 -->
             <el-sub-menu index="/main-intro">
               <template #title>
                 <el-icon><Location /></el-icon>
@@ -40,19 +40,19 @@
                 <span>个人简历</span>
               </el-menu-item>
             </el-sub-menu>
-            <!-- 一级菜单 -->
+            <!-- 用户管理 -->
             <el-sub-menu index="/user-manage">
               <template #title>
-                <el-icon><Location /></el-icon>
+                <el-icon><User /></el-icon>
                 <span>用户管理</span>
               </template>
               <!-- 二级菜单 -->
               <el-menu-item index="/user-manage/user">
-                <el-icon><Location /></el-icon>
+                <el-icon><User /></el-icon>
                 <span>用户设置</span>
               </el-menu-item>
               <el-menu-item index="/user-manage/admin">
-                <el-icon><Location /></el-icon>
+                <el-icon><UserFilled /></el-icon>
                 <span>管理员设置</span>
               </el-menu-item>
             </el-sub-menu>
