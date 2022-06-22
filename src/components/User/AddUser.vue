@@ -13,7 +13,7 @@
         <el-input v-model="addForm.username"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="addForm.password"></el-input>
+        <el-input v-model="addForm.password" type="password"></el-input>
       </el-form-item>
       <el-form-item label="昵称" prop="nickName">
         <el-input v-model="addForm.nickName"></el-input>
@@ -34,20 +34,24 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button type="primary" @click="closeDialog(false)">取 消</el-button>
-        <el-button type="primary">确 定</el-button>
+        <el-button type="primary" @click="submitAdd">确 定</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { ElMessage } from 'element-plus'
+import { reactive, toRefs, ref } from 'vue'
+import api from '@/api/index'
 export default {
   props: {
     centerDialogVisible: Boolean
   },
   emits: ['onCloseDialog'],
   setup(props, { emit }) {
+    // 表单的ref
+    const addFormRef = ref()
     const state = reactive({
       centerDialogVisible: props.centerDialogVisible,
       addForm: {
@@ -80,18 +84,38 @@ export default {
       ],
       exp: [{ required: true, message: '请输入经验值默认为0', trigger: 'blur' }],
       score: [{ required: true, message: '请输入积分默认为0', trigger: 'blur' }],
-      imgUrl: [
-        { required: true, message: '请输入头像地址', trigger: 'blur' },
-        { min: 1, max: 10, message: '请输入头像地址', trigger: 'blur' }
-      ]
+      imgUrl: [{ required: true, message: '请输入头像地址', trigger: 'blur' }]
     }
+    // 关闭对话框
     const closeDialog = visible => {
+      // 重置表单
+      addFormRef.value.resetFields()
       emit('onCloseDialog', visible)
+    }
+    // 处理添加用户
+    const submitAdd = () => {
+      // 校验表单是否通过
+      addFormRef.value.validate(async valid => {
+        if (valid) {
+          // 发请求
+          const { data: res } = await api.addUser(state.addForm)
+          if (res.code === 200) {
+            // 成功后 发出关闭对话框请求
+            emit('onCloseDialog', false, res.count)
+            // 重置表单
+            addFormRef.value.resetFields()
+          } else {
+            ElMessage.error('添加失败')
+          }
+        }
+      })
     }
     return {
       ...toRefs(state),
       addFormRules,
-      closeDialog
+      closeDialog,
+      addFormRef,
+      submitAdd
     }
   }
 }

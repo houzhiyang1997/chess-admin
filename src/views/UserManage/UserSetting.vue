@@ -58,6 +58,7 @@
 
 <script>
 import AddUser from '@/components/User/AddUser.vue'
+import { ElMessage } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
 import { onMounted, reactive, toRefs } from 'vue'
@@ -98,8 +99,15 @@ export default {
       getUserList()
     }
     // 关闭窗口
-    const closeDialogVisible = visible => {
+    const closeDialogVisible = (visible, count) => {
       state.centerDialogVisible = visible
+      if (count !== undefined) {
+        ElMessage({
+          message: '添加成功',
+          type: 'success'
+        })
+        getUserList()
+      }
     }
     onMounted(() => {
       getUserList()

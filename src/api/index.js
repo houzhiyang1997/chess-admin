@@ -1,6 +1,6 @@
 import http from '@/util/http.js'
 
-// 获取全部新闻列表
+// 获取用户列表 带分页和查询
 const getUsers = (pageNum, pageSize, searchContent) => {
   return http({
     params: {
@@ -9,8 +9,16 @@ const getUsers = (pageNum, pageSize, searchContent) => {
       searchContent: searchContent
     },
     method: 'GET',
-    // url: `/getusers?pageNum=${pageNum}&pageSize=${pageSize}&searchContent=${searchContent}`
     url: '/getusers'
+  })
+}
+
+// 添加用户
+const addUser = formData => {
+  return http({
+    method: 'POST',
+    url: '/adduser',
+    data: formData
   })
 }
 
@@ -36,6 +44,7 @@ const login = (username, password) => {
 
 export default {
   getUsers,
+  addUser,
   getDetailById,
   login
 }
