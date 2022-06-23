@@ -42,18 +42,18 @@
       </el-form-item>
       <el-form-item label="职业" prop="jobs">
         <el-select
-          @change="handleSelectRaces"
+          @change="handleSelectJobs"
           multiple
           :multiple-limit="2"
           v-model="addForm.jobs"
           class="m-2"
           placeholder="选择职业"
         >
-          <el-option v-for="item in raceList" :key="item.id" :label="item.name" :value="item.name" />
+          <el-option v-for="item in jobList" :key="item.id" :label="item.name" :value="item.name" />
         </el-select>
       </el-form-item>
       <el-form-item label="职业ID列表" prop="jobIds">
-        <el-input v-model="addForm.jobIds"></el-input>
+        <el-input v-model="addForm.jobIds" disabled></el-input>
       </el-form-item>
       <el-form-item label="英雄费率" prop="price">
         <el-input v-model="addForm.price"></el-input>
@@ -147,6 +147,7 @@ export default {
       centerDialogVisible: props.centerDialogVisible,
       season: props.season,
       raceList: [],
+      jobList: [],
       addForm: {
         chessId: 0,
         TFTID: 0,
@@ -239,8 +240,26 @@ export default {
       })
       state.addForm.raceIds = result.join(',')
     }
+    // 获取职业列表用于下拉选择
+    const getJobs = async () => {
+      const { data: res } = await api.getJobs(1, 100, '', state.season)
+      state.jobList = res.jobs
+    }
+    // 将选择的职业映射为羁绊id列表
+    const handleSelectJobs = () => {
+      const result = []
+      state.addForm.jobs.forEach(item => {
+        state.jobList.forEach(job => {
+          if (job.name === item) {
+            result.push(job.jobId)
+          }
+        })
+      })
+      state.addForm.jobIds = result.join(',')
+    }
     onMounted(() => {
       getRaces()
+      getJobs()
     })
     return {
       ...toRefs(state),
@@ -249,7 +268,9 @@ export default {
       addFormRef,
       submitAdd,
       getRaces,
-      handleSelectRaces
+      getJobs,
+      handleSelectRaces,
+      handleSelectJobs
     }
   }
 }

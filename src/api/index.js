@@ -56,6 +56,20 @@ const getRaces = (pageNum, pageSize, searchContent, selectContent) => {
   })
 }
 
+// 获取job列表 带分页和查询
+const getJobs = (pageNum, pageSize, searchContent, selectContent) => {
+  return http({
+    params: {
+      pageNum: pageNum,
+      pageSize: pageSize,
+      searchContent: searchContent,
+      selectContent: selectContent
+    },
+    method: 'GET',
+    url: '/getjobs'
+  })
+}
+
 /* 添加 */
 
 // 添加用户
@@ -149,6 +163,7 @@ export default {
   getAdmins,
   getChesses,
   getRaces,
+  getJobs,
   addUser,
   addAdmin,
   editUser,
