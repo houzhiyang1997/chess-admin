@@ -13,11 +13,33 @@ const getUsers = (pageNum, pageSize, searchContent) => {
   })
 }
 
+// 获取用户列表 带分页和查询
+const getAdmins = (pageNum, pageSize, searchContent) => {
+  return http({
+    params: {
+      pageNum: pageNum,
+      pageSize: pageSize,
+      searchContent: searchContent
+    },
+    method: 'GET',
+    url: '/getadmins'
+  })
+}
+
 // 添加用户
 const addUser = formData => {
   return http({
     method: 'POST',
     url: '/adduser',
+    data: formData
+  })
+}
+
+// 添加管理员
+const addAdmin = formData => {
+  return http({
+    method: 'POST',
+    url: '/addadmin',
     data: formData
   })
 }
@@ -61,7 +83,9 @@ const login = (username, password) => {
 
 export default {
   getUsers,
+  getAdmins,
   addUser,
+  addAdmin,
   editUser,
   deleteUser,
   getUserById,
