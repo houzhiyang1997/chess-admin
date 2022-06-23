@@ -72,20 +72,20 @@
                 <span>添加阵容</span>
               </el-menu-item>
             </el-sub-menu>
-            <!-- 一级菜单 -->
+            <!-- 英雄管理 -->
             <el-sub-menu index="/chess-manage">
               <template #title>
-                <el-icon><Location /></el-icon>
+                <el-icon><Star /></el-icon>
                 <span>英雄管理</span>
               </template>
               <!-- 二级菜单 -->
               <el-menu-item index="/chess-manage/setting">
-                <el-icon><Location /></el-icon>
+                <el-icon><StarFilled /></el-icon>
                 <span>英雄详情</span>
               </el-menu-item>
-              <el-menu-item index="/chess-manage/add">
-                <el-icon><Location /></el-icon>
-                <span>添加英雄</span>
+              <el-menu-item index="/chess-manage/add" disabled>
+                <el-icon><StarFilled /></el-icon>
+                <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 一级菜单 -->

@@ -22,7 +22,7 @@
         </el-row>
         <div class="main-table">
           <!-- 主干table -->
-          <el-table :data="adminList" stripe border>
+          <el-table :data="adminList" stripe border height="calc(100vh - 260px)">
             <el-table-column prop="id" label="序号" width="80" />
             <el-table-column prop="admin" label="管理员用户名" />
             <el-table-column prop="nickName" label="昵称" />

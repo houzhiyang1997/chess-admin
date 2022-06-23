@@ -28,6 +28,34 @@ const getAdmins = (pageNum, pageSize, searchContent) => {
   })
 }
 
+// 获取棋子列表 带分页和查询
+const getChesses = (pageNum, pageSize, searchContent, selectContent) => {
+  return http({
+    params: {
+      pageNum: pageNum,
+      pageSize: pageSize,
+      searchContent: searchContent,
+      selectContent: selectContent
+    },
+    method: 'GET',
+    url: '/getchesses'
+  })
+}
+
+// 获取race列表 带分页和查询
+const getRaces = (pageNum, pageSize, searchContent, selectContent) => {
+  return http({
+    params: {
+      pageNum: pageNum,
+      pageSize: pageSize,
+      searchContent: searchContent,
+      selectContent: selectContent
+    },
+    method: 'GET',
+    url: '/getraces'
+  })
+}
+
 /* 添加 */
 
 // 添加用户
@@ -119,6 +147,8 @@ const login = (username, password) => {
 export default {
   getUsers,
   getAdmins,
+  getChesses,
+  getRaces,
   addUser,
   addAdmin,
   editUser,
