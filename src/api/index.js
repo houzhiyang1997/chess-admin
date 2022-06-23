@@ -96,6 +96,14 @@ const deleteUser = id => {
   })
 }
 
+// 删除管理员信息 id
+const deleteAdmin = id => {
+  return http({
+    method: 'GET',
+    url: `/deleteadmin?id=${id}`
+  })
+}
+
 // 登录
 const login = (username, password) => {
   return http({
@@ -116,6 +124,7 @@ export default {
   editUser,
   editAdmin,
   deleteUser,
+  deleteAdmin,
   getUserById,
   getAdminById,
   login

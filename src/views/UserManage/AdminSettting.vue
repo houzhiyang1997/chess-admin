@@ -32,9 +32,7 @@
             <el-table-column label="操作">
               <template #default="scope">
                 <el-button type="primary" :icon="Edit" size="small" @click="handleEdit(scope.row.id)">编辑</el-button>
-                <el-button type="danger" :icon="Delete" size="small" @click="handleDelete(scope.row.id)"
-                  >删除</el-button
-                >
+                <el-button type="danger" :icon="Delete" size="small" @click="handleDelete(scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -67,7 +65,7 @@
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import AddAdmin from '@/components/User/AddAdmin.vue'
 import EditAdmin from '@/components/User/EditAdmin.vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { reactive, toRefs, onMounted } from 'vue'
 import api from '@/api/index.js'
 export default {
@@ -135,6 +133,48 @@ export default {
         getAdminList()
       }
     }
+    // 处理删除
+    const handleDelete = row => {
+      if (row.level === '超级管理员') {
+        ElNotification({
+          title: '提示',
+          message: '超级管理员不允许删除',
+          type: 'error'
+        })
+        return
+      }
+      ElMessageBox.confirm('您确认删除该条数据吗?', '重要提醒', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+        callback: async action => {
+          if (action === 'confirm') {
+            const { data: res } = await api.deleteAdmin(row.id)
+            if (res.count === 1) {
+              ElNotification({
+                title: '成功',
+                message: '删除成功',
+                type: 'success'
+              })
+              getAdminList()
+            } else {
+              ElNotification({
+                title: '出错啦',
+                message: '删除失败',
+                type: 'error'
+              })
+            }
+          }
+          if (action === 'cancel') {
+            ElNotification({
+              title: '提示',
+              message: '用户取消',
+              type: 'warning'
+            })
+          }
+        }
+      })
+    }
     onMounted(() => {
       getAdminList()
     })
@@ -149,7 +189,8 @@ export default {
       handleSearch,
       closeDialogVisible,
       handleEdit,
-      closeEditDialogVisible
+      closeEditDialogVisible,
+      handleDelete
     }
   }
 }
