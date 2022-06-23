@@ -1,37 +1,37 @@
 <template>
-  <el-dialog title="添加次级管理员" width="30%" center :model-value="centerDialogVisible" @closed="closeDialog(false)">
+  <el-dialog title="编辑管理员信息" width="30%" center :model-value="editDialogVisible" @closed="closeDialog(false)">
     <!-- 用户表单 -->
     <el-form
-      :model="addForm"
-      :rules="addFormRules"
-      ref="addFormRef"
+      :model="editForm"
+      :rules="editFormRules"
+      ref="editFormRef"
       label-width="100px"
       label-position="left"
       status-icon
     >
       <el-form-item label="用户名" prop="admin">
-        <el-input v-model="addForm.admin"></el-input>
+        <el-input v-model="editForm.admin" disabled></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="addForm.password" type="password"></el-input>
+        <el-input v-model="editForm.password" type="password"></el-input>
       </el-form-item>
       <el-form-item label="昵称" prop="nickName">
-        <el-input v-model="addForm.nickName"></el-input>
+        <el-input v-model="editForm.nickName"></el-input>
       </el-form-item>
       <el-form-item label="管理员级别" prop="level">
-        <el-input v-model="addForm.level" disabled></el-input>
+        <el-input v-model="editForm.level" disabled></el-input>
       </el-form-item>
       <el-form-item label="注册时间" prop="regDate">
-        <el-input v-model="addForm.regDate" @focus="getFormDate"></el-input>
+        <el-input v-model="editForm.regDate" @focus="getFormDate"></el-input>
       </el-form-item>
       <el-form-item label="头像地址" prop="imgUrl">
-        <el-input v-model="addForm.imgUrl"></el-input>
+        <el-input v-model="editForm.imgUrl"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="closeDialog(false)">取 消</el-button>
-        <el-button type="primary" @click="submitAdd">确 定</el-button>
+        <el-button type="danger" @click="closeDialog(false)">取 消</el-button>
+        <el-button type="primary" @click="submitEdit">确 定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -39,32 +39,34 @@
 
 <script>
 import { ElMessage } from 'element-plus'
-import { reactive, toRefs, ref } from 'vue'
-import myUtil from '@/util/myUtil.js'
+import { reactive, toRefs, ref, onMounted } from 'vue'
 import { useCheckDate } from '@/hooks/useValidator.js'
 import api from '@/api/index'
+import myUtil from '@/util/myUtil.js'
 export default {
   props: {
-    centerDialogVisible: Boolean
+    editDialogVisible: Boolean,
+    curID: Number
   },
-  emits: ['onCloseDialog'],
+  emits: ['onCloseEditDialog'],
   setup(props, { emit }) {
     // 表单的ref
-    const addFormRef = ref()
+    const editFormRef = ref()
     const state = reactive({
-      centerDialogVisible: props.centerDialogVisible,
-      addForm: {
+      editForm: {
         admin: '',
         password: '',
         nickName: '',
-        level: '次级管理员',
-        regDate: '',
+        level: '',
+        regDate: 0,
         imgUrl: ''
       },
+      editDialogVisible: props.editDialogVisible,
+      curID: props.curID,
       checkDate: useCheckDate()
     })
     // 校验规则
-    const addFormRules = {
+    const editFormRules = {
       admin: [
         { required: true, message: '请输入用户名', trigger: 'blur' },
         { min: 3, max: 10, message: '用户名长度在3~10个字符之间', trigger: 'blur' }
@@ -84,41 +86,48 @@ export default {
       ],
       imgUrl: [{ required: true, message: '请输入头像地址', trigger: 'blur' }]
     }
+    // 根据id查询用户信息
+    const getAdminById = async () => {
+      const { data: res } = await api.getAdminById(state.curID)
+      state.editForm = res.admin
+    }
     // 关闭对话框
     const closeDialog = visible => {
-      // 重置表单
-      addFormRef.value.resetFields()
-      emit('onCloseDialog', visible)
+      emit('onCloseEditDialog', visible)
     }
     // 实现点击时间框获取当前时间并填充
     const getFormDate = () => {
-      state.addForm.regDate = myUtil.formDate()
+      state.editForm.regDate = myUtil.formDate()
     }
-    // 处理添加用户
-    const submitAdd = () => {
+    // 处理修改用户信息
+    const submitEdit = () => {
       // 校验表单是否通过
-      addFormRef.value.validate(async valid => {
+      editFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.addAdmin(state.addForm)
+          const { data: res } = await api.editAdmin(state.editForm)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
-            emit('onCloseDialog', false, res.count)
+            emit('onCloseEditDialog', false, res.count)
             // 重置表单
-            addFormRef.value.resetFields()
+            editFormRef.value.resetFields()
           } else {
-            ElMessage.error('添加失败')
+            ElMessage.error('修改失败')
           }
         }
       })
     }
+    onMounted(() => {
+      getAdminById()
+    })
     return {
       ...toRefs(state),
-      addFormRules,
+      editFormRules,
       closeDialog,
-      addFormRef,
+      editFormRef,
+      getAdminById,
       getFormDate,
-      submitAdd
+      submitEdit
     }
   }
 }

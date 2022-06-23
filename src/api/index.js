@@ -1,5 +1,7 @@
 import http from '@/util/http.js'
 
+/* 获取列表带分页和查询 */
+
 // 获取用户列表 带分页和查询
 const getUsers = (pageNum, pageSize, searchContent) => {
   return http({
@@ -26,6 +28,8 @@ const getAdmins = (pageNum, pageSize, searchContent) => {
   })
 }
 
+/* 添加 */
+
 // 添加用户
 const addUser = formData => {
   return http({
@@ -44,6 +48,26 @@ const addAdmin = formData => {
   })
 }
 
+/* 根据id获取信息 */
+
+// 根据id获取用户信息
+const getUserById = id => {
+  return http({
+    method: 'GET',
+    url: `/getuserbyid?id=${id}`
+  })
+}
+
+// 根据id获取 管理员 信息
+const getAdminById = id => {
+  return http({
+    method: 'GET',
+    url: `/getadminbyid?id=${id}`
+  })
+}
+
+/* 修改信息 */
+
 // 修改用户信息
 const editUser = formData => {
   return http({
@@ -53,19 +77,22 @@ const editUser = formData => {
   })
 }
 
+// 修改管理员信息
+const editAdmin = formData => {
+  return http({
+    method: 'POST',
+    url: '/editadmin',
+    data: formData
+  })
+}
+
+/* 删除信息 */
+
 // 删除用户信息 id
 const deleteUser = id => {
   return http({
     method: 'GET',
     url: `/deleteuser?id=${id}`
-  })
-}
-
-// 根据id获取用户信息
-const getUserById = id => {
-  return http({
-    method: 'GET',
-    url: `/getuserbyid?id=${id}`
   })
 }
 
@@ -87,7 +114,9 @@ export default {
   addUser,
   addAdmin,
   editUser,
+  editAdmin,
   deleteUser,
   getUserById,
+  getAdminById,
   login
 }

@@ -53,12 +53,12 @@
         </div>
       </el-card>
       <AddAdmin :centerDialogVisible="centerDialogVisible" @onCloseDialog="closeDialogVisible"></AddAdmin>
-      <EditUser
+      <EditAdmin
         v-if="editDialogVisible"
         :editDialogVisible="editDialogVisible"
         :curID="curID"
         @onCloseEditDialog="closeEditDialogVisible"
-      ></EditUser>
+      ></EditAdmin>
     </div>
   </div>
 </template>
@@ -66,12 +66,14 @@
 <script>
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import AddAdmin from '@/components/User/AddAdmin.vue'
+import EditAdmin from '@/components/User/EditAdmin.vue'
 import { ElMessage } from 'element-plus'
 import { reactive, toRefs, onMounted } from 'vue'
 import api from '@/api/index.js'
 export default {
   components: {
-    AddAdmin
+    AddAdmin,
+    EditAdmin
   },
   setup() {
     const state = reactive({
@@ -117,6 +119,22 @@ export default {
         getAdminList()
       }
     }
+    // 处理编辑
+    const handleEdit = ID => {
+      state.editDialogVisible = true
+      state.curID = ID
+    }
+    // 关闭编辑窗口
+    const closeEditDialogVisible = (visible, count) => {
+      state.editDialogVisible = visible
+      if (count !== undefined) {
+        ElMessage({
+          message: '编辑成功',
+          type: 'success'
+        })
+        getAdminList()
+      }
+    }
     onMounted(() => {
       getAdminList()
     })
@@ -129,7 +147,9 @@ export default {
       handleSizeChange,
       handleCurrentChange,
       handleSearch,
-      closeDialogVisible
+      closeDialogVisible,
+      handleEdit,
+      closeEditDialogVisible
     }
   }
 }
