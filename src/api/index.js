@@ -70,6 +70,20 @@ const getJobs = (pageNum, pageSize, searchContent, selectContent) => {
   })
 }
 
+// 获取equip列表 带分页和查询
+const getEquips = (pageNum, pageSize, searchContent, selectContent) => {
+  return http({
+    params: {
+      pageNum: pageNum,
+      pageSize: pageSize,
+      searchContent: searchContent,
+      selectContent: selectContent
+    },
+    method: 'GET',
+    url: '/getequips'
+  })
+}
+
 /* 添加 */
 
 // 添加用户
@@ -164,6 +178,7 @@ export default {
   getChesses,
   getRaces,
   getJobs,
+  getEquips,
   addUser,
   addAdmin,
   editUser,

@@ -62,13 +62,16 @@
         <el-input v-model="addForm.skillName"></el-input>
       </el-form-item>
       <el-form-item label="技能类型" prop="skillType">
-        <el-input v-model="addForm.skillType"></el-input>
+        <el-select v-model="addForm.skillType" class="m-2" placeholder="选择技能类型">
+          <el-option label="主动" value="主动" />
+          <el-option label="被动" value="被动" />
+        </el-select>
       </el-form-item>
       <el-form-item label="技能图片地址" prop="skillImage">
         <el-input v-model="addForm.skillImage"></el-input>
       </el-form-item>
       <el-form-item label="技能介绍" prop="skillDetail">
-        <el-input v-model="addForm.skillDetail"></el-input>
+        <el-input v-model="addForm.skillDetail" :rows="2" type="textarea"></el-input>
       </el-form-item>
       <el-form-item label="生命值" prop="life">
         <el-input v-model="addForm.life"></el-input>
@@ -101,7 +104,9 @@
         <el-input v-model="addForm.lifeData"></el-input>
       </el-form-item>
       <el-form-item label="推荐装备" prop="recEquip">
-        <el-input v-model="addForm.recEquip"></el-input>
+        <el-select multiple :multiple-limit="6" v-model="addForm.recEquip" class="m-2" placeholder="选择装备">
+          <el-option v-for="item in equipList" :key="item.id" :label="item.name" :value="item.equipId" />
+        </el-select>
       </el-form-item>
       <el-form-item label="游戏版本" prop="version">
         <el-input v-model="addForm.version"></el-input>
@@ -148,6 +153,7 @@ export default {
       season: props.season,
       raceList: [],
       jobList: [],
+      equipList: [],
       addForm: {
         chessId: 0,
         TFTID: 0,
@@ -245,7 +251,7 @@ export default {
       const { data: res } = await api.getJobs(1, 100, '', state.season)
       state.jobList = res.jobs
     }
-    // 将选择的职业映射为羁绊id列表
+    // 将选择的职业映射为职业id列表
     const handleSelectJobs = () => {
       const result = []
       state.addForm.jobs.forEach(item => {
@@ -257,9 +263,15 @@ export default {
       })
       state.addForm.jobIds = result.join(',')
     }
+    // 获取装备列表用于下拉选择
+    const getEquips = async () => {
+      const { data: res } = await api.getEquips(1, 50, '', state.season)
+      state.equipList = res.equips
+    }
     onMounted(() => {
       getRaces()
       getJobs()
+      getEquips()
     })
     return {
       ...toRefs(state),
@@ -269,6 +281,7 @@ export default {
       submitAdd,
       getRaces,
       getJobs,
+      getEquips,
       handleSelectRaces,
       handleSelectJobs
     }
