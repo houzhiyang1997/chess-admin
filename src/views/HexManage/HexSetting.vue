@@ -81,20 +81,20 @@
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
       ></AddHex>
-      <EditEquip
+      <EditHex
         v-if="editDialogVisible"
         :season="selectValue"
         :editDialogVisible="editDialogVisible"
         :curID="curID"
         @onCloseEditDialog="closeEditDialogVisible"
-      ></EditEquip>
+      ></EditHex>
     </div>
   </div>
 </template>
 
 <script>
 import AddHex from '@/components/Hex/AddHex.vue'
-import EditEquip from '@/components/Equip/EditEquip.vue'
+import EditHex from '@/components/Hex/EditHex.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
@@ -102,7 +102,7 @@ import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
     AddHex,
-    EditEquip
+    EditHex
   },
   setup() {
     const state = reactive({

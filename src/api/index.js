@@ -188,6 +188,14 @@ const getEquipById = id => {
   })
 }
 
+// 根据id获取 海克斯 信息
+const getHexById = id => {
+  return http({
+    method: 'GET',
+    url: `/gethexbyid?id=${id}`
+  })
+}
+
 /* 修改信息 */
 
 // 修改用户信息
@@ -222,6 +230,15 @@ const editEquip = formData => {
   return http({
     method: 'POST',
     url: '/editequip',
+    data: formData
+  })
+}
+
+// 修改 hex 信息
+const editHex = formData => {
+  return http({
+    method: 'POST',
+    url: '/edithex',
     data: formData
   })
 }
@@ -290,6 +307,7 @@ export default {
   editAdmin,
   editChess,
   editEquip,
+  editHex,
   deleteUser,
   deleteAdmin,
   deleteChess,
@@ -298,5 +316,6 @@ export default {
   getAdminById,
   getChessById,
   getEquipById,
+  getHexById,
   login
 }
