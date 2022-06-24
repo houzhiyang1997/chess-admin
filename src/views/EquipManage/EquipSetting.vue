@@ -20,7 +20,7 @@
             <el-button type="warning" @click="centerDialogVisible = true">添加装备</el-button>
           </el-col>
           <el-col :span="6">
-            <el-select v-model="selectValue" class="m-2" placeholder="赛季与版本选择" @change="getChessList()">
+            <el-select v-model="selectValue" class="m-2" placeholder="赛季与版本选择" @change="getEquipList()">
               <el-option label="S7-巨龙之境" value="2022.S7" />
               <el-option label="S6-霓虹之夜" value="2022.S6" />
             </el-select>
@@ -28,17 +28,17 @@
         </el-row>
         <div class="main-table">
           <!-- 主干table -->
-          <el-table :data="chessList" stripe border height="calc(100vh - 260px)">
+          <el-table :data="equipList" stripe border height="calc(100vh - 260px)">
             <el-table-column label="预览图">
-              <template #default>
-                <el-image src="https://game.gtimg.cn/images/lol/act/img/tft/equip/204.png " />
+              <template #default="scope">
+                <el-image :src="scope.row.imagePath" />
               </template>
             </el-table-column>
             <el-table-column prop="id" label="序号" width="80" />
             <el-table-column prop="equipId" label="装备ID" width="80" />
             <el-table-column fixed prop="name" label="装备名" width="120" />
             <el-table-column prop="type" label="装备类型" width="120" />
-            <el-table-column prop="keyword" label="关键词" width="100" />
+            <el-table-column prop="keywords" label="关键词" width="130" />
             <el-table-column prop="formula" label="合成路径" width="100" />
             <el-table-column prop="effect" label="装备效果" width="130" :show-overflow-tooltip="true" />
             <el-table-column prop="imagePath" label="图片地址" width="120" :show-overflow-tooltip="true" />
@@ -100,7 +100,7 @@ export default {
   },
   setup() {
     const state = reactive({
-      chessList: [],
+      equipList: [],
       total: 0, // 总条数
       pageNum: 1, // 当前页码数
       pageSize: 10, // 每页大小
@@ -111,26 +111,28 @@ export default {
       curID: 0
     })
     // 获取棋子列表
-    const getChessList = async () => {
-      const { data: res } = await api.getChesses(state.pageNum, state.pageSize, state.searchContent, state.selectValue)
-      state.chessList = res.chesses
+    const getEquipList = async () => {
+      const { data: res } = await api.getEquips(state.pageNum, state.pageSize, state.searchContent, state.selectValue)
+      state.equipList = res.equips
+      // 将装备类型进行映射
+      state.equipList.forEach(item => (item.type = item.type === 1 ? '散件或特装' : '成装'))
       state.total = res.total
     }
     // 每页大小改变
     const handleSizeChange = val => {
       state.pageSize = val
-      getChessList()
+      getEquipList()
     }
     // 当前页码改变
     const handleCurrentChange = val => {
       state.pageNum = val
-      getChessList()
+      getEquipList()
     }
     // 处理搜索
     const handleSearch = () => {
       // 搜索后需要重置到第一页
       state.pageNum = 1
-      getChessList()
+      getEquipList()
     }
     // 关闭窗口
     const closeDialogVisible = (visible, count) => {
@@ -140,7 +142,7 @@ export default {
           message: '添加成功',
           type: 'success'
         })
-        getChessList()
+        getEquipList()
       }
     }
     // 处理编辑
@@ -156,7 +158,7 @@ export default {
           message: '编辑成功',
           type: 'success'
         })
-        getChessList()
+        getEquipList()
       }
     }
     // 处理删除
@@ -174,7 +176,7 @@ export default {
                 message: '删除成功',
                 type: 'success'
               })
-              getChessList()
+              getEquipList()
             } else {
               ElNotification({
                 title: '出错啦',
@@ -194,14 +196,14 @@ export default {
       })
     }
     onMounted(() => {
-      getChessList()
+      getEquipList()
     })
     return {
       Search,
       Delete,
       Edit,
       ...toRefs(state),
-      getChessList,
+      getEquipList,
       handleSizeChange,
       handleCurrentChange,
       handleSearch,
