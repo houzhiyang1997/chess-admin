@@ -31,17 +31,17 @@
           <el-table :data="equipList" stripe border height="calc(100vh - 260px)">
             <el-table-column label="预览图">
               <template #default="scope">
-                <el-image :src="scope.row.imagePath" />
+                <el-image :src="scope.row.imagePath" style="width: 48px" />
               </template>
             </el-table-column>
             <el-table-column prop="id" label="序号" width="80" />
             <el-table-column prop="equipId" label="装备ID" width="80" />
             <el-table-column fixed prop="name" label="装备名" width="120" />
             <el-table-column prop="type" label="装备类型" width="120" />
-            <el-table-column prop="keywords" label="关键词" width="130" :show-overflow-tooltip="true" />
+            <el-table-column prop="keywords" label="关键词" :show-overflow-tooltip="true" />
             <el-table-column prop="formula" label="合成路径" width="100" />
-            <el-table-column prop="effect" label="装备效果" width="130" :show-overflow-tooltip="true" />
-            <el-table-column prop="imagePath" label="图片地址" width="120" :show-overflow-tooltip="true" />
+            <el-table-column prop="effect" label="装备效果" width="200" :show-overflow-tooltip="true" />
+            <el-table-column prop="imagePath" label="图片地址" width="180" :show-overflow-tooltip="true" />
             <el-table-column prop="version" label="游戏版本" width="100" />
             <el-table-column prop="season" label="游戏赛季" width="100" />
             <el-table-column fixed="right" label="操作" width="100">
@@ -75,20 +75,20 @@
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
       ></AddEquip>
-      <EditChess
+      <EditEquip
         v-if="editDialogVisible"
         :season="selectValue"
         :editDialogVisible="editDialogVisible"
         :curID="curID"
         @onCloseEditDialog="closeEditDialogVisible"
-      ></EditChess>
+      ></EditEquip>
     </div>
   </div>
 </template>
 
 <script>
 import AddEquip from '@/components/Equip/AddEquip.vue'
-import EditChess from '@/components/Chess/EditChess.vue'
+import EditEquip from '@/components/Equip/EditEquip.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
@@ -96,7 +96,7 @@ import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
     AddEquip,
-    EditChess
+    EditEquip
   },
   setup() {
     const state = reactive({

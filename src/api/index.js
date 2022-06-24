@@ -156,6 +156,14 @@ const getChessById = id => {
   })
 }
 
+// 根据id获取 装备 信息
+const getEquipById = id => {
+  return http({
+    method: 'GET',
+    url: `/getequipbyid?id=${id}`
+  })
+}
+
 /* 修改信息 */
 
 // 修改用户信息
@@ -244,5 +252,6 @@ export default {
   getUserById,
   getAdminById,
   getChessById,
+  getEquipById,
   login
 }
