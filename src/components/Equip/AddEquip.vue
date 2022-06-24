@@ -16,7 +16,7 @@
         <el-input v-model="addForm.name"></el-input>
       </el-form-item>
       <el-form-item label="装备类型" prop="type">
-        <el-select v-model="addForm.type" class="m-2" placeholder="选择技能类型">
+        <el-select v-model="addForm.type" class="m-2" placeholder="选择装备类型">
           <el-option label="散件或特装" :value="1" />
           <el-option label="成装" :value="2" />
         </el-select>
