@@ -211,11 +211,19 @@ const deleteAdmin = id => {
   })
 }
 
-// 删除管理员信息 id
+// 删除 英雄棋子 id
 const deleteChess = id => {
   return http({
     method: 'GET',
     url: `/deletechess?id=${id}`
+  })
+}
+
+// 删除管理员信息 id
+const deleteEquip = id => {
+  return http({
+    method: 'GET',
+    url: `/deleteequip?id=${id}`
   })
 }
 
@@ -249,6 +257,7 @@ export default {
   deleteUser,
   deleteAdmin,
   deleteChess,
+  deleteEquip,
   getUserById,
   getAdminById,
   getChessById,
