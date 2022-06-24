@@ -269,11 +269,19 @@ const deleteChess = id => {
   })
 }
 
-// 删除管理员信息 id
+// 删除 装备 id
 const deleteEquip = id => {
   return http({
     method: 'GET',
     url: `/deleteequip?id=${id}`
+  })
+}
+
+// 删除管理员信息 id
+const deleteHex = id => {
+  return http({
+    method: 'GET',
+    url: `/deletehex?id=${id}`
   })
 }
 
@@ -312,6 +320,7 @@ export default {
   deleteAdmin,
   deleteChess,
   deleteEquip,
+  deleteHex,
   getUserById,
   getAdminById,
   getChessById,
