@@ -104,6 +104,15 @@ const addAdmin = formData => {
   })
 }
 
+// 添加英雄棋子
+const addChess = formData => {
+  return http({
+    method: 'POST',
+    url: '/addchess',
+    data: formData
+  })
+}
+
 /* 根据id获取信息 */
 
 // 根据id获取用户信息
@@ -181,6 +190,7 @@ export default {
   getEquips,
   addUser,
   addAdmin,
+  addChess,
   editUser,
   editAdmin,
   deleteUser,

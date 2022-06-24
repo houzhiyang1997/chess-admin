@@ -66,28 +66,28 @@
       </el-form-item>
 
       <el-form-item label="生命值" prop="life">
-        <el-input v-model="addForm.life"></el-input>
+        <el-input v-model.number="addForm.life"></el-input>
       </el-form-item>
       <el-form-item label="法力值" prop="magic">
-        <el-input v-model="addForm.magic"></el-input>
+        <el-input v-model.number="addForm.magic"></el-input>
       </el-form-item>
       <el-form-item label="初始法力值" prop="startMagic">
-        <el-input v-model="addForm.startMagic"></el-input>
+        <el-input v-model.number="addForm.startMagic"></el-input>
       </el-form-item>
       <el-form-item label="护甲" prop="armor">
-        <el-input v-model="addForm.armor"></el-input>
+        <el-input v-model.number="addForm.armor"></el-input>
       </el-form-item>
       <el-form-item label="魔抗" prop="spellBlock">
-        <el-input v-model="addForm.spellBlock"></el-input>
+        <el-input v-model.number="addForm.spellBlock"></el-input>
       </el-form-item>
       <el-form-item label="攻击力" prop="attack">
-        <el-input v-model="addForm.attack"></el-input>
+        <el-input v-model.number="addForm.attack"></el-input>
       </el-form-item>
       <el-form-item label="攻击速度" prop="attackSpeed">
         <el-input v-model="addForm.attackSpeed"></el-input>
       </el-form-item>
       <el-form-item label="攻击距离" prop="attackRange">
-        <el-input v-model="addForm.attackRange"></el-input>
+        <el-input v-model.number="addForm.attackRange"></el-input>
       </el-form-item>
       <el-form-item label="攻击成长" prop="attackData">
         <el-input v-model="addForm.attackData"></el-input>
@@ -122,10 +122,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="游戏赛季" prop="season">
-        <el-select v-model="addForm.season" class="m-2" placeholder="选择游戏赛季">
-          <el-option label="S7-巨龙之境" value="2022.S7" />
-          <el-option label="S7-霓虹之夜" value="2022.S6" />
-        </el-select>
+        <el-input v-model="addForm.season" disabled></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -193,7 +190,7 @@ export default {
         lifeData: '',
         recEquip: '',
         version: '',
-        season: ''
+        season: props.season
       }
     })
     // 校验规则
@@ -292,8 +289,8 @@ export default {
       attackRange: [
         { required: true, message: '请输入攻击距离', trigger: 'blur' },
         {
-          pattern: /^[0-9]{3,4}$/,
-          message: '请输入3到4位数字',
+          pattern: /^[1-9]$/,
+          message: '请输入1位数字',
           trigger: 'blur'
         }
       ],
@@ -343,7 +340,8 @@ export default {
       addFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.addUser(state.addForm)
+          const { data: res } = await api.addChess(state.addForm)
+          console.log(res)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
             emit('onCloseDialog', false, res.count)
