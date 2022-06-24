@@ -75,12 +75,12 @@
           />
         </div>
       </el-card>
-      <AddEquip
+      <AddHex
         v-if="centerDialogVisible"
         :season="selectValue"
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
-      ></AddEquip>
+      ></AddHex>
       <EditEquip
         v-if="editDialogVisible"
         :season="selectValue"
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import AddEquip from '@/components/Equip/AddEquip.vue'
+import AddHex from '@/components/Hex/AddHex.vue'
 import EditEquip from '@/components/Equip/EditEquip.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
@@ -101,7 +101,7 @@ import api from '@/api/index.js'
 import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
-    AddEquip,
+    AddHex,
     EditEquip
   },
   setup() {
@@ -128,6 +128,22 @@ export default {
       )
       state.hexList = res.hexes
       state.total = res.total
+      // 海克斯等级映射
+      state.hexList.forEach(item => {
+        switch (item.type) {
+          case 1:
+            item.type = '白银'
+            break
+          case 2:
+            item.type = '黄金'
+            break
+          case 3:
+            item.type = '彩金'
+            break
+          default:
+            break
+        }
+      })
     }
     // 每页大小改变
     const handleSizeChange = val => {
