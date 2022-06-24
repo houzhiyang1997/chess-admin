@@ -114,20 +114,20 @@
                 <el-menu-item index="/job-manage/add">添加羁绊</el-menu-item>
               </el-sub-menu>
             </el-sub-menu>
-            <!-- 一级菜单 -->
+            <!-- 装备管理 -->
             <el-sub-menu index="/equip-manage">
               <template #title>
-                <el-icon><Location /></el-icon>
+                <el-icon><Help /></el-icon>
                 <span>装备管理</span>
               </template>
               <!-- 二级菜单 -->
               <el-menu-item index="/equip-manage/setting">
-                <el-icon><Location /></el-icon>
+                <el-icon><HelpFilled /></el-icon>
                 <span>装备详情</span>
               </el-menu-item>
-              <el-menu-item index="/equip-manage/add">
-                <el-icon><Location /></el-icon>
-                <span>添加装备</span>
+              <el-menu-item index="/equip-manage/add" disabled>
+                <el-icon><HelpFilled /></el-icon>
+                <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 一级菜单 -->
