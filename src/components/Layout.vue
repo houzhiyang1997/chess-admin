@@ -88,30 +88,31 @@
                 <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
-            <!-- 一级菜单 -->
+            <!-- 羁绊管理 -->
             <el-sub-menu index="/raceandjob">
               <template #title>
-                <el-icon><Location /></el-icon>
+                <el-icon><Magnet /></el-icon>
                 <span>羁绊管理</span>
               </template>
-              <!-- 二级菜单 -->
+              <!-- 种族管理 -->
               <el-sub-menu index="/race-manage">
                 <template #title>
-                  <el-icon><Location /></el-icon>
+                  <el-icon><PriceTag /></el-icon>
                   <span>种族管理</span>
                 </template>
-                <!-- 三级菜单 -->
+                <!-- 种族详情 -->
                 <el-menu-item index="/race-manage/setting">种族详情</el-menu-item>
-                <el-menu-item index="/race-manage/add">添加种族</el-menu-item>
+                <el-menu-item index="/race-manage/add" disabled>功能接入中</el-menu-item>
               </el-sub-menu>
+              <!-- 职业管理 -->
               <el-sub-menu index="/job-manage">
                 <template #title>
-                  <el-icon><Location /></el-icon>
+                  <el-icon><Suitcase /></el-icon>
                   <span>职业管理</span>
                 </template>
-                <!-- 三级菜单 -->
-                <el-menu-item index="/job-manage/setting">羁绊详情</el-menu-item>
-                <el-menu-item index="/job-manage/add">添加羁绊</el-menu-item>
+                <!-- 职业详情 -->
+                <el-menu-item index="/job-manage/setting">职业详情</el-menu-item>
+                <el-menu-item index="/job-manage/add" disabled>功能接入中</el-menu-item>
               </el-sub-menu>
             </el-sub-menu>
             <!-- 装备管理 -->
@@ -130,20 +131,20 @@
                 <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
-            <!-- 一级菜单 -->
+            <!-- 海克斯管理 -->
             <el-sub-menu index="/hex-manage">
               <template #title>
-                <el-icon><Location /></el-icon>
+                <el-icon><PictureRounded /></el-icon>
                 <span>海克斯管理</span>
               </template>
               <!-- 二级菜单 -->
               <el-menu-item index="/hex-manage/setting">
-                <el-icon><Location /></el-icon>
+                <el-icon><PieChart /></el-icon>
                 <span>海克斯详情</span>
               </el-menu-item>
-              <el-menu-item index="/hex-manage/add">
-                <el-icon><Location /></el-icon>
-                <span>添加海克斯</span>
+              <el-menu-item index="/hex-manage/add" disabled>
+                <el-icon><PieChart /></el-icon>
+                <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 一级菜单 -->
