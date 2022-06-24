@@ -13,7 +13,7 @@
         <el-input v-model.number="addForm.equipId"></el-input>
       </el-form-item>
       <el-form-item label="装备名称" prop="name">
-        <el-input v-model="addForm.name" type="password"></el-input>
+        <el-input v-model="addForm.name"></el-input>
       </el-form-item>
       <el-form-item label="装备类型" prop="type">
         <el-select v-model="addForm.type" class="m-2" placeholder="选择技能类型">
@@ -132,7 +132,7 @@ export default {
       addFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.addUser(state.addForm)
+          const { data: res } = await api.addEquip(state.addForm)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
             emit('onCloseDialog', false, res.count)
@@ -147,9 +147,8 @@ export default {
 
     // 获取合成路径装备列表用于下拉选择
     const getFormulaEquips = async () => {
-      // 设置该分页和裁切是为了获得501-509的标准散件 后期删除装备后，再写一个专门查散件的api
-      const { data: res } = await api.getEquips(9, 11, '', state.season)
-      state.formulaEquipList = res.equips.slice(1, 10)
+      const { data: res } = await api.getFormula(state.season)
+      state.formulaEquipList = res.formula
     }
     onMounted(() => {
       getFormulaEquips()

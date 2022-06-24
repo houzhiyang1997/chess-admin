@@ -84,6 +84,14 @@ const getEquips = (pageNum, pageSize, searchContent, selectContent) => {
   })
 }
 
+// 获取 formula 列表
+const getFormula = season => {
+  return http({
+    method: 'GET',
+    url: `/getformula?season=${season}`
+  })
+}
+
 /* 添加 */
 
 // 添加用户
@@ -109,6 +117,15 @@ const addChess = formData => {
   return http({
     method: 'POST',
     url: '/addchess',
+    data: formData
+  })
+}
+
+// 添加装备棋子
+const addEquip = formData => {
+  return http({
+    method: 'POST',
+    url: '/addequip',
     data: formData
   })
 }
@@ -213,9 +230,11 @@ export default {
   getRaces,
   getJobs,
   getEquips,
+  getFormula,
   addUser,
   addAdmin,
   addChess,
+  addEquip,
   editUser,
   editAdmin,
   editChess,
