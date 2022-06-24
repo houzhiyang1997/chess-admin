@@ -140,7 +140,7 @@ export default {
       editFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.editChess(state.editForm)
+          const { data: res } = await api.editEquip(state.editForm)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
             emit('onCloseEditDialog', false, res.count)

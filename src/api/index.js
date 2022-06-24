@@ -136,11 +136,20 @@ const addChess = formData => {
   })
 }
 
-// 添加装备棋子
+// 添加装备
 const addEquip = formData => {
   return http({
     method: 'POST',
     url: '/addequip',
+    data: formData
+  })
+}
+
+// 添加海克斯
+const addHex = formData => {
+  return http({
+    method: 'POST',
+    url: '/addhex',
     data: formData
   })
 }
@@ -208,6 +217,15 @@ const editChess = formData => {
   })
 }
 
+// 修改 装备 信息
+const editEquip = formData => {
+  return http({
+    method: 'POST',
+    url: '/editequip',
+    data: formData
+  })
+}
+
 /* 删除信息 */
 
 // 删除用户信息 id
@@ -267,9 +285,11 @@ export default {
   addAdmin,
   addChess,
   addEquip,
+  addHex,
   editUser,
   editAdmin,
   editChess,
+  editEquip,
   deleteUser,
   deleteAdmin,
   deleteChess,

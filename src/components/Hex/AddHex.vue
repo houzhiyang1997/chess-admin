@@ -117,7 +117,7 @@ export default {
       addFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.addEquip(state.addForm)
+          const { data: res } = await api.addHex(state.addForm)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
             emit('onCloseDialog', false, res.count)
