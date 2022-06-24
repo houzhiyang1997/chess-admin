@@ -190,7 +190,7 @@ export default {
         type: 'warning',
         callback: async action => {
           if (action === 'confirm') {
-            const { data: res } = await api.deleteUser(ID)
+            const { data: res } = await api.deleteChess(ID)
             if (res.count === 1) {
               ElNotification({
                 title: '成功',

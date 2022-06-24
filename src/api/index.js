@@ -186,6 +186,14 @@ const deleteAdmin = id => {
   })
 }
 
+// 删除管理员信息 id
+const deleteChess = id => {
+  return http({
+    method: 'GET',
+    url: `/deletechess?id=${id}`
+  })
+}
+
 // 登录
 const login = (username, password) => {
   return http({
@@ -213,6 +221,7 @@ export default {
   editChess,
   deleteUser,
   deleteAdmin,
+  deleteChess,
   getUserById,
   getAdminById,
   getChessById,
