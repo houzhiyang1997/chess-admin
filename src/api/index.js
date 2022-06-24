@@ -131,6 +131,14 @@ const getAdminById = id => {
   })
 }
 
+// 根据id获取 英雄棋子 信息
+const getChessById = id => {
+  return http({
+    method: 'GET',
+    url: `/getchessbyid?id=${id}`
+  })
+}
+
 /* 修改信息 */
 
 // 修改用户信息
@@ -147,6 +155,15 @@ const editAdmin = formData => {
   return http({
     method: 'POST',
     url: '/editadmin',
+    data: formData
+  })
+}
+
+// 修改 英雄棋子 信息
+const editChess = formData => {
+  return http({
+    method: 'POST',
+    url: '/editchess',
     data: formData
   })
 }
@@ -193,9 +210,11 @@ export default {
   addChess,
   editUser,
   editAdmin,
+  editChess,
   deleteUser,
   deleteAdmin,
   getUserById,
   getAdminById,
+  getChessById,
   login
 }

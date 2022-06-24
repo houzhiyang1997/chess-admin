@@ -98,19 +98,20 @@
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
       ></AddChess>
-      <EditUser
+      <EditChess
         v-if="editDialogVisible"
+        :season="selectValue"
         :editDialogVisible="editDialogVisible"
         :curID="curID"
         @onCloseEditDialog="closeEditDialogVisible"
-      ></EditUser>
+      ></EditChess>
     </div>
   </div>
 </template>
 
 <script>
 import AddChess from '@/components/Chess/AddChess.vue'
-import EditUser from '@/components/User/EditUser.vue'
+import EditChess from '@/components/Chess/EditChess.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
@@ -118,7 +119,7 @@ import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
     AddChess,
-    EditUser
+    EditChess
   },
   setup() {
     const state = reactive({
