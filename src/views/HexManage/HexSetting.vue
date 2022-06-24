@@ -20,14 +20,14 @@
             <el-button type="warning" @click="centerDialogVisible = true">添加海克斯</el-button>
           </el-col>
           <el-col :span="4">
-            <el-select v-model="selectValue" class="m-2" placeholder="赛季与版本选择" @change="getEquipList()">
+            <el-select v-model="selectValue" class="m-2" placeholder="赛季与版本选择" @change="getHexList()">
               <el-option label="S7-巨龙之境" value="2022.S7" />
               <el-option label="S6-霓虹之夜" value="2022.S6" />
             </el-select>
           </el-col>
           <el-col :span="4">
-            <el-select v-model="hexLevel" class="m-2" placeholder="海克斯等级选择" @change="getEquipList()">
-              <el-option label="全部" value="" />
+            <el-select v-model="hexLevel" class="m-2" placeholder="海克斯等级选择" @change="getHexList()">
+              <el-option label="全部" value="all" />
               <el-option label="白银海克斯" value="1" />
               <el-option label="黄金海克斯" value="2" />
               <el-option label="彩金海克斯" value="3" />
@@ -36,7 +36,7 @@
         </el-row>
         <div class="main-table">
           <!-- 主干table -->
-          <el-table :data="equipList" stripe border height="calc(100vh - 260px)">
+          <el-table :data="hexList" stripe border height="calc(100vh - 260px)">
             <el-table-column label="预览图">
               <template #default="scope">
                 <el-image :src="scope.row.imgUrl" style="width: 48px" />
@@ -106,40 +106,44 @@ export default {
   },
   setup() {
     const state = reactive({
-      equipList: [],
+      hexList: [],
       total: 0, // 总条数
       pageNum: 1, // 当前页码数
       pageSize: 10, // 每页大小
       searchContent: '', // 搜索内容
       selectValue: '2022.S7',
-      hexLevel: '',
+      hexLevel: 'all',
       centerDialogVisible: false,
       editDialogVisible: false,
       curID: 0
     })
     // 获取装备列表
-    const getEquipList = async () => {
-      const { data: res } = await api.getEquips(state.pageNum, state.pageSize, state.searchContent, state.selectValue)
-      state.equipList = res.equips
-      // 将装备类型进行映射
-      state.equipList.forEach(item => (item.type = item.type === 1 ? '散件或特装' : '成装'))
+    const getHexList = async () => {
+      const { data: res } = await api.getHexes(
+        state.pageNum,
+        state.pageSize,
+        state.searchContent,
+        state.selectValue,
+        state.hexLevel
+      )
+      state.hexList = res.hexes
       state.total = res.total
     }
     // 每页大小改变
     const handleSizeChange = val => {
       state.pageSize = val
-      getEquipList()
+      getHexList()
     }
     // 当前页码改变
     const handleCurrentChange = val => {
       state.pageNum = val
-      getEquipList()
+      getHexList()
     }
     // 处理搜索
     const handleSearch = () => {
       // 搜索后需要重置到第一页
       state.pageNum = 1
-      getEquipList()
+      getHexList()
     }
     // 关闭窗口
     const closeDialogVisible = (visible, count) => {
@@ -149,7 +153,7 @@ export default {
           message: '添加成功',
           type: 'success'
         })
-        getEquipList()
+        getHexList()
       }
     }
     // 处理编辑
@@ -165,7 +169,7 @@ export default {
           message: '编辑成功',
           type: 'success'
         })
-        getEquipList()
+        getHexList()
       }
     }
     // 处理删除
@@ -183,7 +187,7 @@ export default {
                 message: '删除成功',
                 type: 'success'
               })
-              getEquipList()
+              getHexList()
             } else {
               ElNotification({
                 title: '出错啦',
@@ -203,14 +207,14 @@ export default {
       })
     }
     onMounted(() => {
-      getEquipList()
+      getHexList()
     })
     return {
       Search,
       Delete,
       Edit,
       ...toRefs(state),
-      getEquipList,
+      getHexList,
       handleSizeChange,
       handleCurrentChange,
       handleSearch,

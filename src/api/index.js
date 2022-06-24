@@ -84,6 +84,21 @@ const getEquips = (pageNum, pageSize, searchContent, selectContent) => {
   })
 }
 
+// 获取hex列表 带分页、查询和分级
+const getHexes = (pageNum, pageSize, searchContent, selectContent, hexLevel) => {
+  return http({
+    params: {
+      pageNum: pageNum,
+      pageSize: pageSize,
+      searchContent: searchContent,
+      selectContent: selectContent,
+      hexLevel: hexLevel
+    },
+    method: 'GET',
+    url: '/gethexes'
+  })
+}
+
 // 获取 formula 列表
 const getFormula = season => {
   return http({
@@ -246,6 +261,7 @@ export default {
   getRaces,
   getJobs,
   getEquips,
+  getHexes,
   getFormula,
   addUser,
   addAdmin,
