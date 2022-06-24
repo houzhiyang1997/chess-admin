@@ -38,7 +38,7 @@
             <el-table-column prop="equipId" label="装备ID" width="80" />
             <el-table-column fixed prop="name" label="装备名" width="120" />
             <el-table-column prop="type" label="装备类型" width="120" />
-            <el-table-column prop="keywords" label="关键词" width="130" />
+            <el-table-column prop="keywords" label="关键词" width="130" :show-overflow-tooltip="true" />
             <el-table-column prop="formula" label="合成路径" width="100" />
             <el-table-column prop="effect" label="装备效果" width="130" :show-overflow-tooltip="true" />
             <el-table-column prop="imagePath" label="图片地址" width="120" :show-overflow-tooltip="true" />
@@ -69,12 +69,12 @@
           />
         </div>
       </el-card>
-      <AddChess
+      <AddEquip
         v-if="centerDialogVisible"
         :season="selectValue"
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
-      ></AddChess>
+      ></AddEquip>
       <EditChess
         v-if="editDialogVisible"
         :season="selectValue"
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import AddChess from '@/components/Chess/AddChess.vue'
+import AddEquip from '@/components/Equip/AddEquip.vue'
 import EditChess from '@/components/Chess/EditChess.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
@@ -95,7 +95,7 @@ import api from '@/api/index.js'
 import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
-    AddChess,
+    AddEquip,
     EditChess
   },
   setup() {
@@ -110,7 +110,7 @@ export default {
       editDialogVisible: false,
       curID: 0
     })
-    // 获取棋子列表
+    // 获取装备列表
     const getEquipList = async () => {
       const { data: res } = await api.getEquips(state.pageNum, state.pageSize, state.searchContent, state.selectValue)
       state.equipList = res.equips
