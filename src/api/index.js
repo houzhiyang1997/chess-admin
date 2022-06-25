@@ -394,6 +394,14 @@ const deleteJob = id => {
   })
 }
 
+// 删除 小小英雄 信息 id
+const deleteHero = id => {
+  return http({
+    method: 'GET',
+    url: `/deletehero?id=${id}`
+  })
+}
+
 // 登录
 const login = (username, password) => {
   return http({
@@ -439,6 +447,7 @@ export default {
   deleteHex,
   deleteRace,
   deleteJob,
+  deleteHero,
   getUserById,
   getAdminById,
   getChessById,
