@@ -147,20 +147,20 @@
                 <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
-            <!-- 一级菜单 -->
+            <!-- 小小英雄管理 -->
             <el-sub-menu index="/small-manage">
               <template #title>
-                <el-icon><Location /></el-icon>
+                <el-icon><Place /></el-icon>
                 <span>小小英雄管理</span>
               </template>
               <!-- 二级菜单 -->
               <el-menu-item index="/small-manage/setting">
-                <el-icon><Location /></el-icon>
+                <el-icon><Place /></el-icon>
                 <span>小小英雄详情</span>
               </el-menu-item>
-              <el-menu-item index="/small-manage/add">
-                <el-icon><Location /></el-icon>
-                <span>添加小小英雄</span>
+              <el-menu-item index="/small-manage/add" disabled>
+                <el-icon><Place /></el-icon>
+                <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 一级菜单 -->
@@ -181,7 +181,7 @@
             </el-sub-menu>
           </el-menu>
         </el-aside>
-        <!-- 主题内容 -->
+        <!-- 主体内容 -->
         <el-main>
           <router-view></router-view>
         </el-main>
