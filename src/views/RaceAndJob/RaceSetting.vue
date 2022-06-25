@@ -165,7 +165,7 @@ export default {
         type: 'warning',
         callback: async action => {
           if (action === 'confirm') {
-            const { data: res } = await api.deleteEquip(ID)
+            const { data: res } = await api.deleteRace(ID)
             if (res.count === 1) {
               ElNotification({
                 title: '成功',

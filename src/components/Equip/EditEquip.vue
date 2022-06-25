@@ -122,7 +122,7 @@ export default {
         }
       ]
     }
-    // 根据id查询 英雄棋子 信息
+    // 根据id查询 装备 信息
     const getEquipById = async () => {
       const { data: res } = await api.getEquipById(state.curID)
       console.log(res)
