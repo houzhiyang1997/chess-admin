@@ -99,6 +99,21 @@ const getHexes = (pageNum, pageSize, searchContent, selectContent, hexLevel) => 
   })
 }
 
+// 获取小小英雄列表 带分页、查询和分级
+const getHeros = (pageNum, pageSize, searchContent, qualityContent, starContent) => {
+  return http({
+    params: {
+      pageNum: pageNum,
+      pageSize: pageSize,
+      searchContent: searchContent,
+      qualityContent: qualityContent,
+      starContent: starContent
+    },
+    method: 'GET',
+    url: '/getheros'
+  })
+}
+
 // 获取 formula 列表
 const getFormula = season => {
   return http({
@@ -373,6 +388,7 @@ export default {
   getJobs,
   getEquips,
   getHexes,
+  getHeros,
   getFormula,
   addUser,
   addAdmin,

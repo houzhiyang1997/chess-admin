@@ -20,7 +20,7 @@
             <el-button type="warning" @click="centerDialogVisible = true">添加小小英雄</el-button>
           </el-col>
           <el-col :span="4">
-            <el-select v-model="qualityValue" class="m-2" placeholder="品质选择" @change="getJobList()">
+            <el-select v-model="qualityValue" class="m-2" placeholder="品质选择" @change="getHeroList()">
               <el-option label="全部" value="all" />
               <el-option label="传说" value="传说" />
               <el-option label="史诗" value="史诗" />
@@ -28,7 +28,7 @@
             </el-select>
           </el-col>
           <el-col :span="4">
-            <el-select v-model="starValue" class="m-2" placeholder="星级选择" @change="getJobList()">
+            <el-select v-model="starValue" class="m-2" placeholder="星级选择" @change="getHeroList()">
               <el-option label="全部" value="all" />
               <el-option label="三星级" :value="3" />
               <el-option label="二星级" :value="2" />
@@ -38,16 +38,17 @@
         </el-row>
         <div class="main-table">
           <!-- 主干table -->
-          <el-table :data="jobList" stripe border height="calc(100vh - 260px)">
+          <el-table :data="heroList" stripe border height="calc(100vh - 260px)">
             <el-table-column label="预览图" width="100">
               <template #default="scope">
-                <el-image :src="scope.row.imagePath" style="width: 48px" />
+                <el-image :src="scope.row.imagePath" style="width: 64px" />
               </template>
             </el-table-column>
             <el-table-column prop="id" label="序号" width="80" />
             <el-table-column prop="heroId" label="小小英雄ID" width="120" />
             <el-table-column fixed prop="name" label="小小英雄" width="120" />
             <el-table-column prop="typeId" label="皮肤类型id" width="120" />
+            <el-table-column prop="type" label="皮肤类型" width="150" />
             <el-table-column prop="mini" label="英雄种类" width="120" :show-overflow-tooltip="true" />
             <el-table-column prop="miniId" label="英雄种类ID" width="120" :show-overflow-tooltip="true" />
             <el-table-column prop="star" label="星级" width="120" :show-overflow-tooltip="true" />
@@ -122,26 +123,32 @@ export default {
       curID: 0
     })
     // 获取职业列表
-    const getJobList = async () => {
-      const { data: res } = await api.getJobs(state.pageNum, state.pageSize, state.searchContent, state.selectValue)
-      state.jobList = res.jobs
+    const getHeroList = async () => {
+      const { data: res } = await api.getHeros(
+        state.pageNum,
+        state.pageSize,
+        state.searchContent,
+        state.qualityValue,
+        state.starValue
+      )
+      state.heroList = res.heros
       state.total = res.total
     }
     // 每页大小改变
     const handleSizeChange = val => {
       state.pageSize = val
-      getJobList()
+      getHeroList()
     }
     // 当前页码改变
     const handleCurrentChange = val => {
       state.pageNum = val
-      getJobList()
+      getHeroList()
     }
     // 处理搜索
     const handleSearch = () => {
       // 搜索后需要重置到第一页
       state.pageNum = 1
-      getJobList()
+      getHeroList()
     }
     // 关闭添加窗口
     const closeDialogVisible = (visible, count) => {
@@ -151,7 +158,7 @@ export default {
           message: '添加成功',
           type: 'success'
         })
-        getJobList()
+        getHeroList()
       }
     }
     // 处理编辑
@@ -167,7 +174,7 @@ export default {
           message: '编辑成功',
           type: 'success'
         })
-        getJobList()
+        getHeroList()
       }
     }
     // 处理删除
@@ -185,7 +192,7 @@ export default {
                 message: '删除成功',
                 type: 'success'
               })
-              getJobList()
+              getHeroList()
             } else {
               ElNotification({
                 title: '出错啦',
@@ -205,14 +212,14 @@ export default {
       })
     }
     onMounted(() => {
-      getJobList()
+      getHeroList()
     })
     return {
       Search,
       Delete,
       Edit,
       ...toRefs(state),
-      getJobList,
+      getHeroList,
       handleSizeChange,
       handleCurrentChange,
       handleSearch,
