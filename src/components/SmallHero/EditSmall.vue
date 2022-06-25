@@ -1,48 +1,48 @@
 <template>
-  <el-dialog title="添加小小英雄" width="50%" center :model-value="centerDialogVisible" @closed="closeDialog(false)">
+  <el-dialog title="编辑小小英雄信息" width="50%" center :model-value="editDialogVisible" @closed="closeDialog(false)">
     <!-- 用户表单 -->
     <el-form
-      :model="addForm"
-      :rules="addFormRules"
-      ref="addFormRef"
+      :model="editForm"
+      :rules="editFormRules"
+      ref="editFormRef"
       label-width="120px"
       label-position="left"
       status-icon
     >
       <el-form-item label="小小英雄ID" prop="heroId">
-        <el-input v-model.number="addForm.heroId"></el-input>
+        <el-input v-model.number="editForm.heroId"></el-input>
       </el-form-item>
       <el-form-item label="小小英雄名称" prop="name">
-        <el-input v-model="addForm.name"></el-input>
+        <el-input v-model="editForm.name"></el-input>
       </el-form-item>
       <el-form-item label="皮肤类型ID" prop="typeId">
-        <el-input v-model.number="addForm.typeId"></el-input>
+        <el-input v-model.number="editForm.typeId"></el-input>
       </el-form-item>
       <el-form-item label="皮肤类型" prop="type">
-        <el-input v-model="addForm.type"></el-input>
+        <el-input v-model="editForm.type"></el-input>
       </el-form-item>
       <el-form-item label="英雄种类ID" prop="miniId">
-        <el-input v-model.number="addForm.miniId"></el-input>
+        <el-input v-model.number="editForm.miniId"></el-input>
       </el-form-item>
       <el-form-item label="英雄种类" prop="mini">
-        <el-input v-model="addForm.mini"></el-input>
+        <el-input v-model="editForm.mini"></el-input>
       </el-form-item>
       <el-form-item label="英雄星级" prop="star">
-        <el-select v-model="addForm.star" class="m-2" placeholder="选择英雄星级">
+        <el-select v-model="editForm.star" class="m-2" placeholder="选择英雄星级">
           <el-option label="一星级" :value="1" />
           <el-option label="二星级" :value="2" />
           <el-option label="三星级" :value="3" />
         </el-select>
       </el-form-item>
       <el-form-item label="英雄品质" prop="quality">
-        <el-select v-model="addForm.quality" class="m-2" placeholder="选择英雄品质">
+        <el-select v-model="editForm.quality" class="m-2" placeholder="选择英雄品质">
           <el-option label="传说" value="传说" />
           <el-option label="史诗" value="史诗" />
           <el-option label="稀有" value="稀有" />
         </el-select>
       </el-form-item>
       <el-form-item label="英雄外形" prop="shape">
-        <el-select v-model="addForm.shape" class="m-2" placeholder="选择英雄品质">
+        <el-select v-model="editForm.shape" class="m-2" placeholder="选择英雄品质">
           <el-option label="紫色一星" value="紫色一星" />
           <el-option label="蓝色一星" value="蓝色一星" />
           <el-option label="蓝色二星" value="蓝色二星" />
@@ -53,16 +53,16 @@
         </el-select>
       </el-form-item>
       <el-form-item label="英雄图片" prop="imagePath">
-        <el-input v-model="addForm.imagePath"></el-input>
+        <el-input v-model="editForm.imagePath"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-image :src="addForm.imagePath" style="width: 64px" />
+        <el-image :src="editForm.imagePath" style="width: 64px" />
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="closeDialog(false)">取 消</el-button>
-        <el-button type="primary" @click="submitAdd">确 定</el-button>
+        <el-button type="danger" @click="closeDialog(false)">取 消</el-button>
+        <el-button type="primary" @click="submitEdit">确 定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -70,20 +70,21 @@
 
 <script>
 import { ElMessage } from 'element-plus'
-import { reactive, toRefs, ref } from 'vue'
+import { reactive, toRefs, ref, onMounted } from 'vue'
 import api from '@/api/index'
 export default {
   props: {
-    centerDialogVisible: Boolean
+    editDialogVisible: Boolean,
+    curID: Number
   },
-  emits: ['onCloseDialog'],
+  emits: ['onCloseEditDialog'],
   setup(props, { emit }) {
     // 表单的ref
-    const addFormRef = ref()
+    const editFormRef = ref()
     const state = reactive({
       season: props.season,
-      centerDialogVisible: props.centerDialogVisible,
-      addForm: {
+      formulaEquipList: [],
+      editForm: {
         heroId: 0,
         name: '',
         typeId: 0,
@@ -94,10 +95,12 @@ export default {
         quality: '',
         shape: '',
         imagePath: ''
-      }
+      },
+      editDialogVisible: props.editDialogVisible,
+      curID: props.curID
     })
     // 校验规则
-    const addFormRules = {
+    const editFormRules = {
       heroId: [
         { required: true, message: '请输入小小英雄ID', trigger: 'blur' },
         {
@@ -153,40 +156,60 @@ export default {
         }
       ]
     }
+    // 根据id查询 小小英雄 信息
+    const getHeroById = async () => {
+      const { data: res } = await api.getHeroById(state.curID)
+      console.log(res)
+      state.editForm = res.hero
+    }
     // 关闭对话框
     const closeDialog = visible => {
-      // 重置表单
-      addFormRef.value.resetFields()
-      emit('onCloseDialog', visible)
+      emit('onCloseEditDialog', visible)
     }
-    // 处理添加装备
-    const submitAdd = () => {
+    // 处理修改 小小英雄 信息
+    const submitEdit = () => {
       // 校验表单是否通过
-      addFormRef.value.validate(async valid => {
+      editFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.addHero(state.addForm)
+          const { data: res } = await api.editHero(state.editForm)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
-            emit('onCloseDialog', false, res.count)
+            emit('onCloseEditDialog', false, res.count)
             // 重置表单
-            addFormRef.value.resetFields()
+            editFormRef.value.resetFields()
           } else {
-            ElMessage.error('添加失败')
+            ElMessage.error('修改失败')
           }
         }
       })
     }
 
+    onMounted(() => {
+      getHeroById()
+    })
     return {
       ...toRefs(state),
-      addFormRules,
+      editFormRules,
       closeDialog,
-      addFormRef,
-      submitAdd
+      editFormRef,
+      getHeroById,
+      submitEdit
     }
   }
 }
 </script>
 
-<style></style>
+<style lang="less" scoped>
+.pre-img {
+  display: flex;
+  align-items: center;
+  .el-image {
+    width: 64px;
+  }
+  div {
+    text-align: center;
+    margin: 0 15px;
+  }
+}
+</style>

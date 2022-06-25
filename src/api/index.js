@@ -254,6 +254,14 @@ const getJobById = id => {
   })
 }
 
+// 根据id获取 小小英雄hero 信息
+const getHeroById = id => {
+  return http({
+    method: 'GET',
+    url: `/getherobyid?id=${id}`
+  })
+}
+
 /* 修改信息 */
 
 // 修改用户信息
@@ -315,6 +323,15 @@ const editJob = formData => {
   return http({
     method: 'POST',
     url: '/editjob',
+    data: formData
+  })
+}
+
+// 修改 小小英雄 信息
+const editHero = formData => {
+  return http({
+    method: 'POST',
+    url: '/edithero',
     data: formData
   })
 }
@@ -414,6 +431,7 @@ export default {
   editHex,
   editRace,
   editJob,
+  editHero,
   deleteUser,
   deleteAdmin,
   deleteChess,
@@ -428,5 +446,6 @@ export default {
   getHexById,
   getRaceById,
   getJobById,
+  getHeroById,
   login
 }

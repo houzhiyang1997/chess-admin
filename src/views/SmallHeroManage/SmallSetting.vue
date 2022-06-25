@@ -85,19 +85,19 @@
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
       ></AddSmall>
-      <EditJob
+      <EditSmall
         v-if="editDialogVisible"
         :editDialogVisible="editDialogVisible"
         :curID="curID"
         @onCloseEditDialog="closeEditDialogVisible"
-      ></EditJob>
+      ></EditSmall>
     </div>
   </div>
 </template>
 
 <script>
 import AddSmall from '@/components/SmallHero/AddSmall.vue'
-import EditJob from '@/components/RaceAndJob/EditJob.vue'
+import EditSmall from '@/components/SmallHero/EditSmall.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
@@ -105,7 +105,7 @@ import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
     AddSmall,
-    EditJob
+    EditSmall
   },
   setup() {
     const state = reactive({
@@ -120,7 +120,7 @@ export default {
       editDialogVisible: false,
       curID: 0
     })
-    // 获取职业列表
+    // 获取小小英雄列表
     const getHeroList = async () => {
       const { data: res } = await api.getHeros(
         state.pageNum,
