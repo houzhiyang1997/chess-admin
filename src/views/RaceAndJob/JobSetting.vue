@@ -73,20 +73,20 @@
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
       ></AddJob>
-      <EditRace
+      <EditJob
         v-if="editDialogVisible"
         :season="selectValue"
         :editDialogVisible="editDialogVisible"
         :curID="curID"
         @onCloseEditDialog="closeEditDialogVisible"
-      ></EditRace>
+      ></EditJob>
     </div>
   </div>
 </template>
 
 <script>
 import AddJob from '@/components/RaceAndJob/AddJob.vue'
-import EditRace from '@/components/RaceAndJob/EditRace.vue'
+import EditJob from '@/components/RaceAndJob/EditJob.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
@@ -94,7 +94,7 @@ import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
     AddJob,
-    EditRace
+    EditJob
   },
   setup() {
     const state = reactive({

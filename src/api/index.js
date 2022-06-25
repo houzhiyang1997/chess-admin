@@ -222,6 +222,14 @@ const getRaceById = id => {
   })
 }
 
+// 根据id获取 职业 信息
+const getJobById = id => {
+  return http({
+    method: 'GET',
+    url: `/getjobbyid?id=${id}`
+  })
+}
+
 /* 修改信息 */
 
 // 修改用户信息
@@ -274,6 +282,15 @@ const editRace = formData => {
   return http({
     method: 'POST',
     url: '/editrace',
+    data: formData
+  })
+}
+
+// 修改 job 信息
+const editJob = formData => {
+  return http({
+    method: 'POST',
+    url: '/editjob',
     data: formData
   })
 }
@@ -362,6 +379,7 @@ export default {
   editEquip,
   editHex,
   editRace,
+  editJob,
   deleteUser,
   deleteAdmin,
   deleteChess,
@@ -374,5 +392,6 @@ export default {
   getEquipById,
   getHexById,
   getRaceById,
+  getJobById,
   login
 }
