@@ -205,6 +205,14 @@ const getHexById = id => {
   })
 }
 
+// 根据id获取 种族 信息
+const getRaceById = id => {
+  return http({
+    method: 'GET',
+    url: `/getracebyid?id=${id}`
+  })
+}
+
 /* 修改信息 */
 
 // 修改用户信息
@@ -248,6 +256,15 @@ const editHex = formData => {
   return http({
     method: 'POST',
     url: '/edithex',
+    data: formData
+  })
+}
+
+// 修改 race 信息
+const editRace = formData => {
+  return http({
+    method: 'POST',
+    url: '/editrace',
     data: formData
   })
 }
@@ -326,6 +343,7 @@ export default {
   editChess,
   editEquip,
   editHex,
+  editRace,
   deleteUser,
   deleteAdmin,
   deleteChess,
@@ -336,5 +354,6 @@ export default {
   getChessById,
   getEquipById,
   getHexById,
+  getRaceById,
   login
 }

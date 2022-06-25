@@ -112,10 +112,10 @@ export default {
       ]
     }
     // 根据id查询 英雄棋子 信息
-    const getEquipById = async () => {
-      const { data: res } = await api.getEquipById(state.curID)
+    const getRaceById = async () => {
+      const { data: res } = await api.getRaceById(state.curID)
       console.log(res)
-      state.editForm = res.equip
+      state.editForm = res.race
     }
     // 关闭对话框
     const closeDialog = visible => {
@@ -127,7 +127,7 @@ export default {
       editFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.editEquip(state.editForm)
+          const { data: res } = await api.editRace(state.editForm)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
             emit('onCloseEditDialog', false, res.count)
@@ -140,14 +140,14 @@ export default {
       })
     }
     onMounted(() => {
-      // getEquipById()
+      getRaceById()
     })
     return {
       ...toRefs(state),
       editFormRules,
       closeDialog,
       editFormRef,
-      getEquipById,
+      getRaceById,
       submitEdit
     }
   }
