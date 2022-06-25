@@ -67,12 +67,12 @@
           />
         </div>
       </el-card>
-      <AddRace
+      <AddJob
         v-if="centerDialogVisible"
         :season="selectValue"
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
-      ></AddRace>
+      ></AddJob>
       <EditRace
         v-if="editDialogVisible"
         :season="selectValue"
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import AddRace from '@/components/RaceAndJob/AddRace.vue'
+import AddJob from '@/components/RaceAndJob/AddJob.vue'
 import EditRace from '@/components/RaceAndJob/EditRace.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
@@ -93,7 +93,7 @@ import api from '@/api/index.js'
 import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
-    AddRace,
+    AddJob,
     EditRace
   },
   setup() {

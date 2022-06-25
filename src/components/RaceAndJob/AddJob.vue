@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="添加种族" width="50%" center :model-value="centerDialogVisible" @closed="closeDialog(false)">
+  <el-dialog title="添加职业" width="50%" center :model-value="centerDialogVisible" @closed="closeDialog(false)">
     <!-- 用户表单 -->
     <el-form
       :model="addForm"
@@ -9,10 +9,10 @@
       label-position="left"
       status-icon
     >
-      <el-form-item label="种族ID" prop="raceId">
-        <el-input v-model.number="addForm.raceId"></el-input>
+      <el-form-item label="职业ID" prop="raceId">
+        <el-input v-model.number="addForm.jobId"></el-input>
       </el-form-item>
-      <el-form-item label="种族名称" prop="name">
+      <el-form-item label="职业名称" prop="name">
         <el-input v-model="addForm.name"></el-input>
       </el-form-item>
       <el-form-item label="简介" prop="introduce">
@@ -30,7 +30,7 @@
       <el-form-item label="游戏赛季" prop="season">
         <el-input v-model="addForm.season" disabled></el-input>
       </el-form-item>
-      <el-form-item label="种族图片" prop="imagePath">
+      <el-form-item label="职业图片" prop="imagePath">
         <el-input v-model="addForm.imagePath"></el-input>
       </el-form-item>
       <el-form-item>
@@ -63,7 +63,7 @@ export default {
       season: props.season,
       centerDialogVisible: props.centerDialogVisible,
       addForm: {
-        raceId: 0,
+        jobId: 0,
         name: '',
         introduce: '',
         level: '',
@@ -74,8 +74,8 @@ export default {
     })
     // 校验规则
     const addFormRules = {
-      raceId: [
-        { required: true, message: '请输入种族ID', trigger: 'blur' },
+      jobId: [
+        { required: true, message: '请输入职业ID', trigger: 'blur' },
         {
           pattern: /^[0-9]{1,5}$/,
           message: '请输入1到5位数字',
@@ -83,16 +83,16 @@ export default {
         }
       ],
       name: [
-        { required: true, message: '请输入种族名称', trigger: 'blur' },
+        { required: true, message: '请输入职业名称', trigger: 'blur' },
         { min: 2, max: 10, message: '种族名称在2~10个字符之间', trigger: 'blur' }
       ],
       introduce: [
-        { required: true, message: '请输入种族简介', trigger: 'blur' },
+        { required: true, message: '请输入职业简介', trigger: 'blur' },
         { min: 3, max: 255, message: '种族简介在3~255个字符之间', trigger: 'blur' }
       ],
       level: [
-        { required: true, message: '请输入种族分级介绍', trigger: 'blur' },
-        { min: 3, max: 255, message: '种族分级介绍长度为3-255', trigger: 'blur' },
+        { required: true, message: '请输入职业分级介绍', trigger: 'blur' },
+        { min: 3, max: 255, message: '职业分级介绍长度为3-255', trigger: 'blur' },
         {
           pattern: /^(\d:)([\d\w\u4e00-\u9fa5-*\\/【】!！：；。;:%+，.,](&&){0,1})+$/,
           message: '请务必按照‘2:内容&&4:内容’此格式输入',
@@ -101,7 +101,7 @@ export default {
       ],
       version: [{ required: true, message: '请选择游戏版本', trigger: 'blur' }],
       imagePath: [
-        { required: true, message: '请输入种族图片地址', trigger: 'blur' },
+        { required: true, message: '请输入职业图片地址', trigger: 'blur' },
         {
           pattern: /^(http:|https:).*\.(png|jpg)$/,
           message: '请输入正确的地址',
@@ -115,13 +115,13 @@ export default {
       addFormRef.value.resetFields()
       emit('onCloseDialog', visible)
     }
-    // 处理添加race
+    // 处理添加job
     const submitAdd = () => {
       // 校验表单是否通过
       addFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.addRace(state.addForm)
+          const { data: res } = await api.addJob(state.addForm)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
             emit('onCloseDialog', false, res.count)

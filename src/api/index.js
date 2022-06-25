@@ -163,6 +163,15 @@ const addRace = formData => {
   })
 }
 
+// 添加 职业job
+const addJob = formData => {
+  return http({
+    method: 'POST',
+    url: '/addjob',
+    data: formData
+  })
+}
+
 /* 根据id获取信息 */
 
 // 根据id获取用户信息
@@ -346,6 +355,7 @@ export default {
   addEquip,
   addHex,
   addRace,
+  addJob,
   editUser,
   editAdmin,
   editChess,
