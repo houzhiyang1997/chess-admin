@@ -345,6 +345,14 @@ const deleteRace = id => {
   })
 }
 
+// 删除job信息 id
+const deleteJob = id => {
+  return http({
+    method: 'GET',
+    url: `/deletejob?id=${id}`
+  })
+}
+
 // 登录
 const login = (username, password) => {
   return http({
@@ -386,6 +394,7 @@ export default {
   deleteEquip,
   deleteHex,
   deleteRace,
+  deleteJob,
   getUserById,
   getAdminById,
   getChessById,
