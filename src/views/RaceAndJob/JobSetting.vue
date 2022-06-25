@@ -13,14 +13,14 @@
         <!-- 顶部 search card -->
         <el-row :gutter="20">
           <el-col :span="10">
-            <el-input placeholder="搜索种族" :prefix-icon="Search" v-model="searchContent" />
+            <el-input placeholder="搜索职业" :prefix-icon="Search" v-model="searchContent" />
           </el-col>
           <el-col :span="4">
             <el-button type="primary" @click="handleSearch">搜索</el-button>
-            <el-button type="warning" @click="centerDialogVisible = true">添加种族</el-button>
+            <el-button type="warning" @click="centerDialogVisible = true">添加职业</el-button>
           </el-col>
           <el-col :span="6">
-            <el-select v-model="selectValue" class="m-2" placeholder="赛季与版本选择" @change="getEquipList()">
+            <el-select v-model="selectValue" class="m-2" placeholder="赛季与版本选择" @change="getJobList()">
               <el-option label="S7-巨龙之境" value="2022.S7" />
               <el-option label="S6-霓虹之夜" value="2022.S6" />
             </el-select>
@@ -28,15 +28,15 @@
         </el-row>
         <div class="main-table">
           <!-- 主干table -->
-          <el-table :data="raceList" stripe border height="calc(100vh - 260px)">
+          <el-table :data="jobList" stripe border height="calc(100vh - 260px)">
             <el-table-column label="预览图" width="100">
               <template #default="scope">
                 <el-image :src="scope.row.imagePath" style="width: 48px" />
               </template>
             </el-table-column>
             <el-table-column prop="id" label="序号" width="80" />
-            <el-table-column prop="raceId" label="种族ID" width="80" />
-            <el-table-column fixed prop="name" label="种族名" width="120" />
+            <el-table-column prop="jobId" label="职业ID" width="80" />
+            <el-table-column fixed prop="name" label="职业名" width="120" />
             <el-table-column prop="introduce" label="简介" :show-overflow-tooltip="true" />
             <el-table-column prop="level" label="分级介绍" width="200" :show-overflow-tooltip="true" />
             <el-table-column prop="imagePath" label="图片地址" width="180" :show-overflow-tooltip="true" />
@@ -98,7 +98,7 @@ export default {
   },
   setup() {
     const state = reactive({
-      raceList: [],
+      jobList: [],
       total: 0, // 总条数
       pageNum: 1, // 当前页码数
       pageSize: 10, // 每页大小
@@ -108,27 +108,27 @@ export default {
       editDialogVisible: false,
       curID: 0
     })
-    // 获取装备列表
-    const getEquipList = async () => {
-      const { data: res } = await api.getRaces(state.pageNum, state.pageSize, state.searchContent, state.selectValue)
-      state.raceList = res.races
+    // 获取职业列表
+    const getJobList = async () => {
+      const { data: res } = await api.getJobs(state.pageNum, state.pageSize, state.searchContent, state.selectValue)
+      state.jobList = res.jobs
       state.total = res.total
     }
     // 每页大小改变
     const handleSizeChange = val => {
       state.pageSize = val
-      getEquipList()
+      getJobList()
     }
     // 当前页码改变
     const handleCurrentChange = val => {
       state.pageNum = val
-      getEquipList()
+      getJobList()
     }
     // 处理搜索
     const handleSearch = () => {
       // 搜索后需要重置到第一页
       state.pageNum = 1
-      getEquipList()
+      getJobList()
     }
     // 关闭添加窗口
     const closeDialogVisible = (visible, count) => {
@@ -138,7 +138,7 @@ export default {
           message: '添加成功',
           type: 'success'
         })
-        getEquipList()
+        getJobList()
       }
     }
     // 处理编辑
@@ -154,7 +154,7 @@ export default {
           message: '编辑成功',
           type: 'success'
         })
-        getEquipList()
+        getJobList()
       }
     }
     // 处理删除
@@ -172,7 +172,7 @@ export default {
                 message: '删除成功',
                 type: 'success'
               })
-              getEquipList()
+              getJobList()
             } else {
               ElNotification({
                 title: '出错啦',
@@ -192,14 +192,14 @@ export default {
       })
     }
     onMounted(() => {
-      getEquipList()
+      getJobList()
     })
     return {
       Search,
       Delete,
       Edit,
       ...toRefs(state),
-      getEquipList,
+      getJobList,
       handleSizeChange,
       handleCurrentChange,
       handleSearch,

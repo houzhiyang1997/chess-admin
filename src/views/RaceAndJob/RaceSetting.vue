@@ -20,7 +20,7 @@
             <el-button type="warning" @click="centerDialogVisible = true">添加种族</el-button>
           </el-col>
           <el-col :span="6">
-            <el-select v-model="selectValue" class="m-2" placeholder="赛季与版本选择" @change="getEquipList()">
+            <el-select v-model="selectValue" class="m-2" placeholder="赛季与版本选择" @change="getRaceList()">
               <el-option label="S7-巨龙之境" value="2022.S7" />
               <el-option label="S6-霓虹之夜" value="2022.S6" />
             </el-select>
@@ -109,7 +109,7 @@ export default {
       curID: 0
     })
     // 获取装备列表
-    const getEquipList = async () => {
+    const getRaceList = async () => {
       const { data: res } = await api.getRaces(state.pageNum, state.pageSize, state.searchContent, state.selectValue)
       state.raceList = res.races
       state.total = res.total
@@ -117,18 +117,18 @@ export default {
     // 每页大小改变
     const handleSizeChange = val => {
       state.pageSize = val
-      getEquipList()
+      getRaceList()
     }
     // 当前页码改变
     const handleCurrentChange = val => {
       state.pageNum = val
-      getEquipList()
+      getRaceList()
     }
     // 处理搜索
     const handleSearch = () => {
       // 搜索后需要重置到第一页
       state.pageNum = 1
-      getEquipList()
+      getRaceList()
     }
     // 关闭添加窗口
     const closeDialogVisible = (visible, count) => {
@@ -138,7 +138,7 @@ export default {
           message: '添加成功',
           type: 'success'
         })
-        getEquipList()
+        getRaceList()
       }
     }
     // 处理编辑
@@ -154,7 +154,7 @@ export default {
           message: '编辑成功',
           type: 'success'
         })
-        getEquipList()
+        getRaceList()
       }
     }
     // 处理删除
@@ -172,7 +172,7 @@ export default {
                 message: '删除成功',
                 type: 'success'
               })
-              getEquipList()
+              getRaceList()
             } else {
               ElNotification({
                 title: '出错啦',
@@ -192,14 +192,14 @@ export default {
       })
     }
     onMounted(() => {
-      getEquipList()
+      getRaceList()
     })
     return {
       Search,
       Delete,
       Edit,
       ...toRefs(state),
-      getEquipList,
+      getRaceList,
       handleSizeChange,
       handleCurrentChange,
       handleSearch,
