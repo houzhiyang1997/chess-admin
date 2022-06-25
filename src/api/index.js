@@ -187,6 +187,15 @@ const addJob = formData => {
   })
 }
 
+// 添加 小小英雄hero
+const addHero = formData => {
+  return http({
+    method: 'POST',
+    url: '/addhero',
+    data: formData
+  })
+}
+
 /* 根据id获取信息 */
 
 // 根据id获取用户信息
@@ -397,6 +406,7 @@ export default {
   addHex,
   addRace,
   addJob,
+  addHero,
   editUser,
   editAdmin,
   editChess,

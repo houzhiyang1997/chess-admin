@@ -80,15 +80,13 @@
           />
         </div>
       </el-card>
-      <AddJob
+      <AddSmall
         v-if="centerDialogVisible"
-        :season="selectValue"
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
-      ></AddJob>
+      ></AddSmall>
       <EditJob
         v-if="editDialogVisible"
-        :season="selectValue"
         :editDialogVisible="editDialogVisible"
         :curID="curID"
         @onCloseEditDialog="closeEditDialogVisible"
@@ -98,7 +96,7 @@
 </template>
 
 <script>
-import AddJob from '@/components/RaceAndJob/AddJob.vue'
+import AddSmall from '@/components/SmallHero/AddSmall.vue'
 import EditJob from '@/components/RaceAndJob/EditJob.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
@@ -106,7 +104,7 @@ import api from '@/api/index.js'
 import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
-    AddJob,
+    AddSmall,
     EditJob
   },
   setup() {
