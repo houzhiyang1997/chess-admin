@@ -154,6 +154,15 @@ const addHex = formData => {
   })
 }
 
+// 添加 种族race
+const addRace = formData => {
+  return http({
+    method: 'POST',
+    url: '/addrace',
+    data: formData
+  })
+}
+
 /* 根据id获取信息 */
 
 // 根据id获取用户信息
@@ -311,6 +320,7 @@ export default {
   addChess,
   addEquip,
   addHex,
+  addRace,
   editUser,
   editAdmin,
   editChess,

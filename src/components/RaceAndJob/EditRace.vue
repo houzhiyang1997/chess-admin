@@ -1,46 +1,46 @@
 <template>
-  <el-dialog title="添加种族" width="50%" center :model-value="centerDialogVisible" @closed="closeDialog(false)">
+  <el-dialog title="编辑种族信息" width="50%" center :model-value="editDialogVisible" @closed="closeDialog(false)">
     <!-- 用户表单 -->
     <el-form
-      :model="addForm"
-      :rules="addFormRules"
-      ref="addFormRef"
+      :model="editForm"
+      :rules="editFormRules"
+      ref="editFormRef"
       label-width="100px"
       label-position="left"
       status-icon
     >
       <el-form-item label="种族ID" prop="raceId">
-        <el-input v-model.number="addForm.raceId"></el-input>
+        <el-input v-model.number="editForm.raceId"></el-input>
       </el-form-item>
       <el-form-item label="种族名称" prop="name">
-        <el-input v-model="addForm.name"></el-input>
+        <el-input v-model="editForm.name"></el-input>
       </el-form-item>
       <el-form-item label="简介" prop="introduce">
-        <el-input v-model="addForm.introduce" :rows="2" type="textarea"></el-input>
+        <el-input v-model="editForm.introduce" :rows="2" type="textarea"></el-input>
       </el-form-item>
       <el-form-item label="分级介绍" prop="level">
-        <el-input v-model="addForm.level" :rows="2" type="textarea"></el-input>
+        <el-input v-model="editForm.level" :rows="2" type="textarea"></el-input>
       </el-form-item>
       <el-form-item label="游戏版本" prop="version">
-        <el-select v-model="addForm.version" class="m-2" placeholder="选择游戏版本">
+        <el-select v-model="editForm.version" class="m-2" placeholder="选择游戏版本">
           <el-option label="12.11" value="12.11" />
           <el-option label="12.9" value="12.9" />
         </el-select>
       </el-form-item>
       <el-form-item label="游戏赛季" prop="season">
-        <el-input v-model="addForm.season" disabled></el-input>
+        <el-input v-model="editForm.season" disabled></el-input>
       </el-form-item>
       <el-form-item label="种族图片" prop="imagePath">
-        <el-input v-model="addForm.imagePath"></el-input>
+        <el-input v-model="editForm.imagePath"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-image :src="addForm.imagePath" style="width: 64px" />
+        <el-image :src="editForm.imagePath" style="width: 64px" />
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="closeDialog(false)">取 消</el-button>
-        <el-button type="primary" @click="submitAdd">确 定</el-button>
+        <el-button type="danger" @click="closeDialog(false)">取 消</el-button>
+        <el-button type="primary" @click="submitEdit">确 定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -48,22 +48,21 @@
 
 <script>
 import { ElMessage } from 'element-plus'
-import { reactive, toRefs, ref } from 'vue'
+import { reactive, toRefs, ref, onMounted } from 'vue'
 import api from '@/api/index'
 export default {
   props: {
-    centerDialogVisible: Boolean,
+    editDialogVisible: Boolean,
+    curID: Number,
     season: String
   },
-  emits: ['onCloseDialog'],
+  emits: ['onCloseEditDialog'],
   setup(props, { emit }) {
     // 表单的ref
-    const addFormRef = ref()
+    const editFormRef = ref()
     const state = reactive({
       season: props.season,
-      centerDialogVisible: props.centerDialogVisible,
-      formulaEquipList: [],
-      addForm: {
+      editForm: {
         raceId: 0,
         name: '',
         introduce: '',
@@ -71,10 +70,12 @@ export default {
         imagePath: '',
         version: '',
         season: props.season
-      }
+      },
+      editDialogVisible: props.editDialogVisible,
+      curID: props.curID
     })
     // 校验规则
-    const addFormRules = {
+    const editFormRules = {
       raceId: [
         { required: true, message: '请输入种族ID', trigger: 'blur' },
         {
@@ -110,40 +111,59 @@ export default {
         }
       ]
     }
+    // 根据id查询 英雄棋子 信息
+    const getEquipById = async () => {
+      const { data: res } = await api.getEquipById(state.curID)
+      console.log(res)
+      state.editForm = res.equip
+    }
     // 关闭对话框
     const closeDialog = visible => {
-      // 重置表单
-      addFormRef.value.resetFields()
-      emit('onCloseDialog', visible)
+      emit('onCloseEditDialog', visible)
     }
-    // 处理添加race
-    const submitAdd = () => {
+    // 处理修改用户信息
+    const submitEdit = () => {
       // 校验表单是否通过
-      addFormRef.value.validate(async valid => {
+      editFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.addRace(state.addForm)
+          const { data: res } = await api.editEquip(state.editForm)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
-            emit('onCloseDialog', false, res.count)
+            emit('onCloseEditDialog', false, res.count)
             // 重置表单
-            addFormRef.value.resetFields()
+            editFormRef.value.resetFields()
           } else {
-            ElMessage.error('添加失败')
+            ElMessage.error('修改失败')
           }
         }
       })
     }
-
+    onMounted(() => {
+      // getEquipById()
+    })
     return {
       ...toRefs(state),
-      addFormRules,
+      editFormRules,
       closeDialog,
-      addFormRef,
-      submitAdd
+      editFormRef,
+      getEquipById,
+      submitEdit
     }
   }
 }
 </script>
 
-<style></style>
+<style lang="less" scoped>
+.pre-img {
+  display: flex;
+  align-items: center;
+  .el-image {
+    width: 64px;
+  }
+  div {
+    text-align: center;
+    margin: 0 15px;
+  }
+}
+</style>

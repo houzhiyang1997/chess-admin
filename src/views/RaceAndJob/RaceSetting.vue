@@ -29,7 +29,7 @@
         <div class="main-table">
           <!-- 主干table -->
           <el-table :data="raceList" stripe border height="calc(100vh - 260px)">
-            <el-table-column label="预览图">
+            <el-table-column label="预览图" width="100">
               <template #default="scope">
                 <el-image :src="scope.row.imagePath" style="width: 48px" />
               </template>
@@ -73,20 +73,20 @@
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
       ></AddRace>
-      <EditEquip
+      <EditRace
         v-if="editDialogVisible"
         :season="selectValue"
         :editDialogVisible="editDialogVisible"
         :curID="curID"
         @onCloseEditDialog="closeEditDialogVisible"
-      ></EditEquip>
+      ></EditRace>
     </div>
   </div>
 </template>
 
 <script>
 import AddRace from '@/components/RaceAndJob/AddRace.vue'
-import EditEquip from '@/components/Equip/EditEquip.vue'
+import EditRace from '@/components/RaceAndJob/EditRace.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
@@ -94,7 +94,7 @@ import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
     AddRace,
-    EditEquip
+    EditRace
   },
   setup() {
     const state = reactive({
@@ -130,7 +130,7 @@ export default {
       state.pageNum = 1
       getEquipList()
     }
-    // 关闭窗口
+    // 关闭添加窗口
     const closeDialogVisible = (visible, count) => {
       state.centerDialogVisible = visible
       if (count !== undefined) {
