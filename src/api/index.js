@@ -443,6 +443,14 @@ const deleteHero = id => {
   })
 }
 
+// 删除 阵容 信息 id
+const deleteTeam = id => {
+  return http({
+    method: 'GET',
+    url: `/deleteteam?id=${id}`
+  })
+}
+
 // 登录
 const login = (username, password) => {
   return http({
@@ -492,6 +500,7 @@ export default {
   deleteRace,
   deleteJob,
   deleteHero,
+  deleteTeam,
   getUserById,
   getAdminById,
   getChessById,
