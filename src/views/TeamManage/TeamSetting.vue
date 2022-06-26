@@ -57,8 +57,8 @@
             <el-table-column prop="positionContent" label="站位解读" width="120" :show-overflow-tooltip="true" />
             <el-table-column prop="formFormulaEquipList" width="120" label="抢装顺序" :show-overflow-tooltip="true" />
             <el-table-column prop="equipContent" label="装备解读" width="120" :show-overflow-tooltip="true" />
-            <el-table-column prop="carryChess" label="主C棋子" width="120" />
-            <el-table-column prop="otherChess" label="副C棋子" width="120" />
+            <el-table-column prop="formCarryChess" label="主C棋子" width="120" />
+            <el-table-column prop="formOtherChess" label="副C棋子" width="120" />
             <el-table-column prop="searchTime" label="搜卡时机" width="120" :show-overflow-tooltip="true" />
             <el-table-column prop="counterRelation" label="克制关系" width="120" :show-overflow-tooltip="true" />
             <el-table-column prop="version" label="游戏版本" width="100" />
@@ -88,12 +88,15 @@
           />
         </div>
       </el-card>
-      <AddChess
+      <AddTeam
         v-if="centerDialogVisible"
         :season="selectValue"
+        :chessList="chessList"
+        :hexList="hexList"
+        :formulaEquipList="formulaEquipList"
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
-      ></AddChess>
+      ></AddTeam>
       <EditChess
         v-if="editDialogVisible"
         :season="selectValue"
@@ -106,7 +109,7 @@
 </template>
 
 <script>
-import AddChess from '@/components/Chess/AddChess.vue'
+import AddTeam from '@/components/Team/AddTeam.vue'
 import EditChess from '@/components/Chess/EditChess.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
@@ -114,7 +117,7 @@ import api from '@/api/index.js'
 import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
-    AddChess,
+    AddTeam,
     EditChess
   },
   setup() {
@@ -154,12 +157,19 @@ export default {
       const { data: res } = await api.getChesses(1, 100, state.searchContent, state.selectValue)
       state.chessList = res.chesses
       // 开始重构 teamList中的chessList
+      // 同时获取主C和副C的映射
       state.teamList.forEach(item => {
         const temp = item.chessList.split(',')
         temp.forEach((ele, index) => {
           state.chessList.forEach(chess => {
             if (chess.chessId === parseInt(ele)) {
               temp[index] = chess.displayName
+            }
+            if (chess.chessId === parseInt(item.carryChess)) {
+              item.formCarryChess = chess.displayName
+            }
+            if (chess.chessId === parseInt(item.otherChess)) {
+              item.formOtherChess = chess.displayName
             }
           })
         })
