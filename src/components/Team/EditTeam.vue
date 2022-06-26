@@ -245,7 +245,7 @@ export default {
     const closeDialog = visible => {
       emit('onCloseEditDialog', visible)
     }
-    // 处理修改用户信息
+    // 处理修改阵容信息
     const submitEdit = () => {
       // 校验表单是否通过
       editFormRef.value.validate(async valid => {
