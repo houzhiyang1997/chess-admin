@@ -97,20 +97,23 @@
         :centerDialogVisible="centerDialogVisible"
         @onCloseDialog="closeDialogVisible"
       ></AddTeam>
-      <EditChess
+      <EditTeam
         v-if="editDialogVisible"
         :season="selectValue"
+        :chessList="chessList"
+        :hexList="hexList"
+        :formulaEquipList="formulaEquipList"
         :editDialogVisible="editDialogVisible"
         :curID="curID"
         @onCloseEditDialog="closeEditDialogVisible"
-      ></EditChess>
+      ></EditTeam>
     </div>
   </div>
 </template>
 
 <script>
 import AddTeam from '@/components/Team/AddTeam.vue'
-import EditChess from '@/components/Chess/EditChess.vue'
+import EditTeam from '@/components/Team/EditTeam.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
@@ -118,7 +121,7 @@ import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
     AddTeam,
-    EditChess
+    EditTeam
   },
   setup() {
     const state = reactive({

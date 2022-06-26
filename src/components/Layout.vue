@@ -56,20 +56,20 @@
                 <span>管理员设置</span>
               </el-menu-item>
             </el-sub-menu>
-            <!-- 一级菜单 -->
+            <!-- 阵容管理 -->
             <el-sub-menu index="/team-manage">
               <template #title>
-                <el-icon><Location /></el-icon>
+                <el-icon><WindPower /></el-icon>
                 <span>阵容管理</span>
               </template>
               <!-- 二级菜单 -->
               <el-menu-item index="/team-manage/setting">
-                <el-icon><Location /></el-icon>
+                <el-icon><Flag /></el-icon>
                 <span>阵容详情</span>
               </el-menu-item>
-              <el-menu-item index="/team-manage/add">
-                <el-icon><Location /></el-icon>
-                <span>添加阵容</span>
+              <el-menu-item index="/team-manage/add" disabled>
+                <el-icon><Flag /></el-icon>
+                <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 英雄管理 -->
@@ -163,20 +163,20 @@
                 <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
-            <!-- 一级菜单 -->
+            <!-- 新闻管理 -->
             <el-sub-menu index="/news-manage">
               <template #title>
-                <el-icon><Location /></el-icon>
+                <el-icon><DocumentCopy /></el-icon>
                 <span>新闻管理</span>
               </template>
               <!-- 二级菜单 -->
               <el-menu-item index="/news-manage/setting">
-                <el-icon><Location /></el-icon>
+                <el-icon><Comment /></el-icon>
                 <span>新闻详情</span>
               </el-menu-item>
               <el-menu-item index="/news-manage/add">
-                <el-icon><Location /></el-icon>
-                <span>新闻发布</span>
+                <el-icon><Comment /></el-icon>
+                <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
           </el-menu>
