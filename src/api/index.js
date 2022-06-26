@@ -114,6 +114,21 @@ const getHeros = (pageNum, pageSize, searchContent, qualityContent, starContent)
   })
 }
 
+// 获取阵容列表 带分页和查询
+const getTeams = (pageNum, pageSize, searchContent, selectContent, labelContent) => {
+  return http({
+    params: {
+      pageNum: pageNum,
+      pageSize: pageSize,
+      searchContent: searchContent,
+      selectContent: selectContent,
+      labelContent: labelContent
+    },
+    method: 'GET',
+    url: '/getteams'
+  })
+}
+
 // 获取 formula 列表
 const getFormula = season => {
   return http({
@@ -423,6 +438,7 @@ export default {
   getEquips,
   getHexes,
   getHeros,
+  getTeams,
   getFormula,
   addUser,
   addAdmin,

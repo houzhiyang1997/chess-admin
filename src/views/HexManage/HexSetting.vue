@@ -37,7 +37,7 @@
         <div class="main-table">
           <!-- 主干table -->
           <el-table :data="hexList" stripe border height="calc(100vh - 260px)">
-            <el-table-column label="预览图">
+            <el-table-column label="预览图" width="120">
               <template #default="scope">
                 <el-image :src="scope.row.imgUrl" style="width: 48px" />
               </template>
@@ -46,7 +46,7 @@
             <el-table-column prop="hexId" label="海克斯ID" width="120" />
             <el-table-column fixed prop="name" label="海克斯名" width="120" />
             <el-table-column prop="type" label="海克斯等级" width="120" />
-            <el-table-column prop="description" label="海克斯效果" width="200" :show-overflow-tooltip="true" />
+            <el-table-column prop="description" label="海克斯效果" :show-overflow-tooltip="true" />
             <el-table-column prop="imgUrl" label="图片地址" width="180" :show-overflow-tooltip="true" />
             <el-table-column prop="version" label="游戏版本" width="100" />
             <el-table-column prop="season" label="游戏赛季" width="100" />
