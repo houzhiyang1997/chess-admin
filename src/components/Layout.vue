@@ -174,7 +174,7 @@
                 <el-icon><Comment /></el-icon>
                 <span>新闻详情</span>
               </el-menu-item>
-              <el-menu-item index="/news-manage/add">
+              <el-menu-item index="/news-manage/add" disabled>
                 <el-icon><Comment /></el-icon>
                 <span>功能接入中</span>
               </el-menu-item>

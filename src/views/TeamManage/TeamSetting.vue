@@ -151,20 +151,24 @@ export default {
       state.teamList = res.teams
       state.total = res.total
       //
-      await getChessList()
-      await getHexList()
-      await getFormulaEquips()
+      getChessList()
+      getHexList()
+      getFormulaEquips()
     }
     // 获取并重构棋子列表
     const getChessList = async () => {
       const { data: res } = await api.getChesses(1, 100, state.searchContent, state.selectValue)
       state.chessList = res.chesses
-      // 开始重构 teamList中的chessList
-      // 同时获取主C和副C的映射
+      // 开始重构 teamList中的chessList 同时获取主C和副C的映射
+      // 1.遍历state中阵容列表，此时item为每一个阵容对象
       state.teamList.forEach(item => {
+        // 2.将每个阵容对象中的棋子列表字符串转为数组
         const temp = item.chessList.split(',')
+        // 3. 遍历数组
         temp.forEach((ele, index) => {
+          // 4. 遍历state中的棋子列表，每个项为每个棋子的信息
           state.chessList.forEach(chess => {
+            // 5. 如果id相等了，则是同一条信息，将id转化为中文名
             if (chess.chessId === parseInt(ele)) {
               temp[index] = chess.displayName
             }
@@ -176,10 +180,11 @@ export default {
             }
           })
         })
+        // 6.最后重组为一个字符串
         item.formChessList = temp.join(',')
       })
     }
-    // 获取并重构hex列表
+    // 获取并重构hex列表 具体方法逻辑注释同getChessList
     const getHexList = async () => {
       const { data: res } = await api.getHexes(1, 600, state.searchContent, state.selectValue, 'all')
       state.hexList = res.hexes
@@ -196,7 +201,7 @@ export default {
         item.formHexList = temp.join(',')
       })
     }
-    // 获取抢装备列表并重构列表
+    // 获取抢装备列表并重构列表 具体方法逻辑注释同getChessList
     const getFormulaEquips = async () => {
       const { data: res } = await api.getFormula(state.selectValue)
       state.formulaEquipList = res.formula
