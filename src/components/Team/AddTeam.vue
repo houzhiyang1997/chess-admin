@@ -5,7 +5,7 @@
       :model="addForm"
       :rules="addFormRules"
       ref="addFormRef"
-      label-width="100px"
+      label-width="120px"
       label-position="left"
       status-icon
     >
@@ -54,7 +54,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="稳健运营" prop="steadyContent">
-        <el-input v-model="addForm.steadyContent"></el-input>
+        <el-input v-model="addForm.steadyContent" :rows="3" type="textarea"></el-input>
       </el-form-item>
       <el-form-item label="海克斯列表" prop="hexList">
         <el-select multiple :multiple-limit="6" v-model="addForm.hexList" class="m-2" placeholder="选择海克斯">
@@ -68,31 +68,31 @@
         ></el-input>
       </el-form-item>
       <el-form-item label="站位解读" prop="positionContent">
-        <el-input v-model="addForm.positionContent"></el-input>
+        <el-input v-model="addForm.positionContent" :rows="3" type="textarea"></el-input>
       </el-form-item>
       <el-form-item label="抢装顺序" prop="equipOrder">
-        <el-select multiple :multiple-limit="5" v-model="addForm.equipOrder" class="m-2" placeholder="选择海克斯">
+        <el-select multiple :multiple-limit="5" v-model="addForm.equipOrder" class="m-2" placeholder="选择装备">
           <el-option v-for="item in formulaEquipList" :key="item.id" :label="item.name" :value="item.equipId" />
         </el-select>
       </el-form-item>
       <el-form-item label="装备解读" prop="equipContent">
-        <el-input v-model="addForm.equipContent"></el-input>
+        <el-input v-model="addForm.equipContent" :rows="3" type="textarea"></el-input>
       </el-form-item>
       <el-form-item label="主C棋子" prop="carryChess">
         <el-select v-model="addForm.carryChess" class="m-2" placeholder="选择棋子">
-          <el-option v-for="item in chessList" :key="item.id" :label="item.displayName" :value="item.chessId" />
+          <el-option v-for="item in choseChessList" :key="item.id" :label="item.displayName" :value="item.chessId" />
         </el-select>
       </el-form-item>
       <el-form-item label="副C棋子" prop="otherChess">
         <el-select v-model="addForm.otherChess" class="m-2" placeholder="选择棋子">
-          <el-option v-for="item in chessList" :key="item.id" :label="item.displayName" :value="item.chessId" />
+          <el-option v-for="item in choseChessList" :key="item.id" :label="item.displayName" :value="item.chessId" />
         </el-select>
       </el-form-item>
       <el-form-item label="搜卡时机" prop="searchTime">
-        <el-input v-model="addForm.searchTime"></el-input>
+        <el-input v-model="addForm.searchTime" :rows="3" type="textarea"></el-input>
       </el-form-item>
       <el-form-item label="克制关系" prop="counterRelation">
-        <el-input v-model="addForm.counterRelation"></el-input>
+        <el-input v-model="addForm.counterRelation" :rows="3" type="textarea"></el-input>
       </el-form-item>
       <el-form-item label="游戏版本" prop="version">
         <el-select v-model="addForm.version" class="m-2" placeholder="选择游戏版本">
@@ -133,6 +133,7 @@ export default {
       centerDialogVisible: props.centerDialogVisible,
       season: props.season,
       chessList: props.chessList,
+      choseChessList: [],
       hexList: props.hexList,
       formulaEquipList: props.formulaEquipList,
       addForm: {
@@ -177,10 +178,7 @@ export default {
         { required: true, message: '请输入作者名', trigger: 'blur' },
         { min: 3, max: 12, message: '作者名长度在3~12个字符之间', trigger: 'blur' }
       ],
-      chessList: [
-        { required: true, message: '请选择棋子', trigger: 'blur' },
-        { min: 5, max: 10, message: '棋子个数为5-10', trigger: 'blur' }
-      ],
+      chessList: [{ required: true, message: '请选择棋子', trigger: 'blur' }],
       goods: [
         { required: true, message: '请输入点赞数', trigger: 'blur' },
         {
@@ -203,19 +201,13 @@ export default {
         { required: true, message: '请输入内容', trigger: 'blur' },
         { min: 3, max: 2048, message: '长度不符合', trigger: 'blur' }
       ],
-      hexList: [
-        { required: true, message: '请选择海克斯', trigger: 'blur' },
-        { min: 6, max: 6, message: '海克斯个数必须为6', trigger: 'blur' }
-      ],
+      hexList: [{ required: true, message: '请选择海克斯', trigger: 'blur' }],
       chessPosition: [{ required: true, message: '请输入棋子站位信息', trigger: 'blur' }],
       positionContent: [
         { required: true, message: '请输入内容', trigger: 'blur' },
         { min: 3, max: 2048, message: '长度不符合', trigger: 'blur' }
       ],
-      equipOrder: [
-        { required: true, message: '请选择装备', trigger: 'blur' },
-        { min: 1, max: 5, message: '装备个数为1-5', trigger: 'blur' }
-      ],
+      equipOrder: [{ required: true, message: '请选择装备', trigger: 'blur' }],
       equipContent: [
         { required: true, message: '请输入内容', trigger: 'blur' },
         { min: 3, max: 2048, message: '长度不符合', trigger: 'blur' }
@@ -245,7 +237,7 @@ export default {
       addFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.addChess(state.addForm)
+          const { data: res } = await api.addTeam(state.addForm)
           console.log(res)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
@@ -261,14 +253,19 @@ export default {
     // 处理棋子选择
     const handleSelectChesses = () => {
       const temp = []
+      const choseChessList = []
+      // 1.需要生成图片列表
       state.addForm.chessList.forEach(chessId => {
         state.chessList.forEach(item => {
           if (chessId === item.chessId) {
             temp.push(item.name)
+            // 2.需要 把主副C限制在 棋子列中中
+            choseChessList.push(item)
           }
         })
       })
       state.addForm.imgList = temp.join(',')
+      state.choseChessList = choseChessList
     }
     return {
       ...toRefs(state),

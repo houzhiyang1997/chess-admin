@@ -211,6 +211,15 @@ const addHero = formData => {
   })
 }
 
+// 添加 阵容Team
+const addTeam = formData => {
+  return http({
+    method: 'POST',
+    url: '/addteam',
+    data: formData
+  })
+}
+
 /* 根据id获取信息 */
 
 // 根据id获取用户信息
@@ -448,6 +457,7 @@ export default {
   addRace,
   addJob,
   addHero,
+  addTeam,
   editUser,
   editAdmin,
   editChess,
