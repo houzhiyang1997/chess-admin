@@ -286,6 +286,14 @@ const getHeroById = id => {
   })
 }
 
+// 根据id获取 阵容team 信息
+const getTeamById = id => {
+  return http({
+    method: 'GET',
+    url: `/getteambyid?id=${id}`
+  })
+}
+
 /* 修改信息 */
 
 // 修改用户信息
@@ -356,6 +364,15 @@ const editHero = formData => {
   return http({
     method: 'POST',
     url: '/edithero',
+    data: formData
+  })
+}
+
+// 修改 阵容 信息
+const editTeam = formData => {
+  return http({
+    method: 'POST',
+    url: '/editteam',
     data: formData
   })
 }
@@ -466,6 +483,7 @@ export default {
   editRace,
   editJob,
   editHero,
+  editTeam,
   deleteUser,
   deleteAdmin,
   deleteChess,
@@ -482,5 +500,6 @@ export default {
   getRaceById,
   getJobById,
   getHeroById,
+  getTeamById,
   login
 }

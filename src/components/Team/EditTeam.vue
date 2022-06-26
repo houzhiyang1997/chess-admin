@@ -164,16 +164,8 @@ export default {
     })
     // 校验规则
     const editFormRules = {
-      chessId: [
-        { required: true, message: '请输入棋子ID', trigger: 'blur' },
-        {
-          pattern: /^[0-9]{1,5}$/,
-          message: '请输入1到5位数字',
-          trigger: 'blur'
-        }
-      ],
-      TFTID: [
-        { required: true, message: '请输入云顶通用ID', trigger: 'blur' },
+      teamId: [
+        { required: true, message: '请输入阵容ID', trigger: 'blur' },
         {
           pattern: /^[0-9]{1,5}$/,
           message: '请输入1到5位数字',
@@ -181,126 +173,73 @@ export default {
         }
       ],
       title: [
-        { required: true, message: '请输入英雄名', trigger: 'blur' },
-        { min: 3, max: 10, message: '英雄名长度在3~10个字符之间', trigger: 'blur' }
+        { required: true, message: '请输入阵容名', trigger: 'blur' },
+        { min: 3, max: 40, message: '英雄名长度在3~40个字符之间', trigger: 'blur' }
       ],
-      name: [
-        { required: true, message: '请输入图片Name', trigger: 'blur' },
+      author: [
+        { required: true, message: '请输入作者名', trigger: 'blur' },
+        { min: 3, max: 12, message: '作者名长度在3~12个字符之间', trigger: 'blur' }
+      ],
+      chessList: [{ required: true, message: '请选择棋子', trigger: 'blur' }],
+      goods: [
+        { required: true, message: '请输入点赞数', trigger: 'blur' },
         {
-          pattern: /^[0-9]{1,5}\.(png|jpg)$/,
-          message: '请输入123.png/jpg格式的输入',
+          pattern: /^[0-9]{1,8}$/,
+          message: '请输入1到8位数字',
           trigger: 'blur'
         }
       ],
-      displayName: [
-        { required: true, message: '请输入英雄别称', trigger: 'blur' },
-        { min: 1, max: 10, message: '英雄别称长度在1~10个字符之间', trigger: 'blur' }
-      ],
-      price: [{ required: true, message: '请选择费率', trigger: 'blur' }],
-      races: [{ required: true, message: '请选择羁绊', trigger: 'blur' }],
-      jobs: [{ required: true, message: '请选择职业', trigger: 'blur' }],
-      life: [
-        { required: true, message: '请输入生命值', trigger: 'blur' },
-        {
-          pattern: /^[0-9]{1,5}$/,
-          message: '请输入1到5位数字',
-          trigger: 'blur'
-        }
-      ],
-      magic: [
-        { required: true, message: '请输入法力值', trigger: 'blur' },
-        {
-          pattern: /^[0-9]{1,3}$/,
-          message: '请输入1到3位数字',
-          trigger: 'blur'
-        }
-      ],
-      startMagic: [
-        { required: true, message: '请输入初始法力值', trigger: 'blur' },
-        {
-          pattern: /^[0-9]{1,3}$/,
-          message: '请输入1到3位数字',
-          trigger: 'blur'
-        }
-      ],
-      armor: [
-        { required: true, message: '请输入护甲', trigger: 'blur' },
-        {
-          pattern: /^[0-9]{1,3}$/,
-          message: '请输入1到3位数字',
-          trigger: 'blur'
-        }
-      ],
-      spellBlock: [
-        { required: true, message: '请输入魔抗', trigger: 'blur' },
-        {
-          pattern: /^[0-9]{1,3}$/,
-          message: '请输入1到3位数字',
-          trigger: 'blur'
-        }
-      ],
-      attack: [
-        { required: true, message: '请输入攻击力', trigger: 'blur' },
-        {
-          pattern: /^[0-9]{1,5}$/,
-          message: '请输入1到5位数字',
-          trigger: 'blur'
-        }
-      ],
-      attackSpeed: [
-        { required: true, message: '请输入攻击速度', trigger: 'blur' },
-        {
-          pattern: /^[0-9]\.[0-9]{2,3}$/,
-          message: '请输入类似0.70的格式',
-          trigger: 'blur'
-        }
-      ],
-      attackRange: [
-        { required: true, message: '请输入攻击距离', trigger: 'blur' },
-        {
-          pattern: /^[1-9]$/,
-          message: '请输入1位数字',
-          trigger: 'blur'
-        }
-      ],
-      attackData: [
-        { required: true, message: '请输入攻击成长', trigger: 'blur' },
-        {
-          pattern: /^[0-9]{1,4}\/[0-9]{1,4}\/[0-9]{1,4}$/,
-          message: '请输入类似1000/2000/3000的格式',
-          trigger: 'blur'
-        }
-      ],
-      lifeData: [
-        { required: true, message: '请输入生命成长', trigger: 'blur' },
-        {
-          pattern: /^[0-9]{1,4}\/[0-9]{1,4}\/[0-9]{1,4}$/,
-          message: '请输入类似1000/2000/3000的格式',
-          trigger: 'blur'
-        }
-      ],
-      recEquip: [{ required: true, message: '请选择推荐装备', trigger: 'blur' }],
-      skillName: [
-        { required: true, message: '请输入技能名称', trigger: 'blur' },
-        { min: 2, max: 12, message: '技能名称长度为2-12', trigger: 'blur' }
-      ],
-      skillType: [{ required: true, message: '请选择技能类型', trigger: 'blur' }],
-      skillImage: [
-        { required: true, message: '请输入技能图片地址', trigger: 'blur' },
+      hard: [{ required: true, message: '请选择成型难度', trigger: 'blur' }],
+      authorImg: [
+        { required: true, message: '请输入作者头像', trigger: 'blur' },
         {
           pattern: /^(http:|https:).*\.(png|jpg)$/,
           message: '请输入正确的地址',
           trigger: 'blur'
         }
       ],
-      skillDetail: [{ required: true, message: '请输入技能介绍', trigger: 'blur' }],
+      label: [{ required: true, message: '请输入选择标签', trigger: 'blur' }],
+      steadyContent: [
+        { required: true, message: '请输入内容', trigger: 'blur' },
+        { min: 3, max: 2048, message: '长度不符合', trigger: 'blur' }
+      ],
+      hexList: [{ required: true, message: '请选择海克斯', trigger: 'blur' }],
+      chessPosition: [{ required: true, message: '请输入棋子站位信息', trigger: 'blur' }],
+      positionContent: [
+        { required: true, message: '请输入内容', trigger: 'blur' },
+        { min: 3, max: 2048, message: '长度不符合', trigger: 'blur' }
+      ],
+      equipOrder: [{ required: true, message: '请选择装备', trigger: 'blur' }],
+      equipContent: [
+        { required: true, message: '请输入内容', trigger: 'blur' },
+        { min: 3, max: 2048, message: '长度不符合', trigger: 'blur' }
+      ],
+      carryChess: [{ required: true, message: '请选择主C棋子', trigger: 'blur' }],
+      otherChess: [{ required: true, message: '请选择副C棋子', trigger: 'blur' }],
+      searchTime: [
+        { required: true, message: '请输入内容', trigger: 'blur' },
+        { min: 3, max: 2048, message: '长度不符合', trigger: 'blur' }
+      ],
+      counterRelation: [
+        { required: true, message: '请输入内容', trigger: 'blur' },
+        { min: 3, max: 2048, message: '长度不符合', trigger: 'blur' }
+      ],
       version: [{ required: true, message: '请选择游戏版本', trigger: 'blur' }],
       season: [{ required: true, message: '请选择游戏赛季', trigger: 'blur' }]
     }
-    // 根据id查询 英雄棋子 信息
-    const getChessById = async () => {
-      const { data: res } = await api.getChessById(state.curID)
-      state.editForm = res.chess
+    // 根据id查询 英雄棋子 信息 并还原信息
+    const getTeamById = async () => {
+      const { data: res } = await api.getTeamById(state.curID)
+      state.editForm = res.team
+
+      // 对 棋子列表 海克斯列表 装备列表进行拆分还原数组
+      state.editForm.chessList = state.editForm.chessList.split(',').map(Number)
+      state.editForm.hexList = state.editForm.hexList.split(',').map(Number)
+      state.editForm.equipOrder = state.editForm.equipOrder.split(',').map(Number)
+      // 将主C和副C棋子也进行还原
+      handleSelectChesses() // 先获取列表 再赋值
+      state.editForm.carryChess = parseInt(state.editForm.carryChess)
+      state.editForm.otherChess = parseInt(state.editForm.otherChess)
     }
     // 关闭对话框
     const closeDialog = visible => {
@@ -312,7 +251,7 @@ export default {
       editFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.editChess(state.editForm)
+          const { data: res } = await api.editTeam(state.editForm)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
             emit('onCloseEditDialog', false, res.count)
@@ -324,72 +263,48 @@ export default {
         }
       })
     }
-    // 获取羁绊列表用于下拉选择
-    const getRaces = async () => {
-      const { data: res } = await api.getRaces(1, 100, '', state.season)
-      state.raceList = res.races
-    }
-    // 将选择的羁绊映射为羁绊id列表
-    const handleSelectRaces = () => {
-      const result = []
-      state.editForm.races.forEach(item => {
-        state.raceList.forEach(race => {
-          if (race.name === item) {
-            result.push(race.raceId)
+    // 处理棋子选择
+    const handleSelectChesses = () => {
+      const temp = []
+      const choseChessList = []
+      // 1.需要生成图片列表
+      state.editForm.chessList.forEach(chessId => {
+        state.chessList.forEach(item => {
+          if (chessId === item.chessId) {
+            temp.push(item.name)
+            // 2.需要 把主副C限制在 棋子列中中
+            choseChessList.push(item)
           }
         })
       })
-      state.editForm.raceIds = result.join(',')
-    }
-    // 获取职业列表用于下拉选择
-    const getJobs = async () => {
-      const { data: res } = await api.getJobs(1, 100, '', state.season)
-      state.jobList = res.jobs
-    }
-    // 将选择的职业映射为职业id列表
-    const handleSelectJobs = () => {
-      const result = []
-      state.editForm.jobs.forEach(item => {
-        state.jobList.forEach(job => {
-          if (job.name === item) {
-            result.push(job.jobId)
-          }
-        })
+      state.editForm.imgList = temp.join(',')
+      state.choseChessList = choseChessList
+      // 每次棋子列表变化 都需要判断主C和副C所选的棋子是否还在列表中
+      let flagCarry = false
+      let flagOther = false
+      state.choseChessList.forEach(item => {
+        if (item.chessId === parseInt(state.editForm.carryChess)) {
+          flagCarry = true
+        }
+        if (item.chessId === parseInt(state.editForm.otherChess)) {
+          flagOther = true
+        }
       })
-      state.editForm.jobIds = result.join(',')
-    }
-    // 获取装备列表用于下拉选择
-    const getEquips = async () => {
-      const { data: res } = await api.getEquips(1, 50, '', state.season)
-      state.equipList = res.equips
-    }
-    // 对 羁绊、职业和装备 需要把字符串重构为数组做select的初始化渲染
-    const formListData = () => {
-      state.editForm.races = state.editForm.races.split(',')
-      state.editForm.jobs = state.editForm.jobs.split(',')
-      // 装备需要进行映射
-      state.editForm.recEquip = state.editForm.recEquip.split(',').map(Number)
+      // 如果为false 证明选择的列表中没有当前选择的英雄了，应置位空
+      if (!flagCarry) state.editForm.carryChess = ''
+      if (!flagOther) state.editForm.otherChess = ''
     }
     onMounted(async () => {
-      getChessById()
-      getRaces()
-      getJobs()
-      await getEquips()
-      formListData()
+      getTeamById()
     })
     return {
       ...toRefs(state),
       editFormRules,
       closeDialog,
       editFormRef,
-      getChessById,
+      getTeamById,
       submitEdit,
-      getRaces,
-      getJobs,
-      getEquips,
-      handleSelectRaces,
-      handleSelectJobs,
-      formListData
+      handleSelectChesses
     }
   }
 }

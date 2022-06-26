@@ -266,6 +266,20 @@ export default {
       })
       state.addForm.imgList = temp.join(',')
       state.choseChessList = choseChessList
+      // 每次棋子列表变化 都需要判断主C和副C所选的棋子是否还在列表中
+      let flagCarry = false
+      let flagOther = false
+      state.choseChessList.forEach(item => {
+        if (item.chessId === parseInt(state.addForm.carryChess)) {
+          flagCarry = true
+        }
+        if (item.chessId === parseInt(state.addForm.otherChess)) {
+          flagOther = true
+        }
+      })
+      // 如果为false 证明选择的列表中没有当前选择的英雄了，应置位空
+      if (!flagCarry) state.addForm.carryChess = ''
+      if (!flagOther) state.addForm.otherChess = ''
     }
     return {
       ...toRefs(state),
