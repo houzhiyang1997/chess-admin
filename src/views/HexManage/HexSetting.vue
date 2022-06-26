@@ -117,7 +117,7 @@ export default {
       editDialogVisible: false,
       curID: 0
     })
-    // 获取装备列表
+    // 获取hex列表
     const getHexList = async () => {
       const { data: res } = await api.getHexes(
         state.pageNum,

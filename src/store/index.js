@@ -2,13 +2,10 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
+    chessList: []
   },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+  getters: {},
+  mutations: {},
+  actions: {},
+  modules: {}
 })

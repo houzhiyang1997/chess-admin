@@ -45,22 +45,22 @@
             <el-table-column prop="teamId" label="阵容ID" width="80" />
             <el-table-column prop="title" label="阵容名称" width="200" :show-overflow-tooltip="true" />
             <el-table-column fixed prop="author" label="作者" width="100" />
-            <el-table-column prop="chessList" label="棋子列表" width="150" :show-overflow-tooltip="true" />
+            <el-table-column prop="formChessList" label="棋子列表" width="150" :show-overflow-tooltip="true" />
             <el-table-column prop="imgList" label="棋子图片名" width="120" :show-overflow-tooltip="true" />
             <el-table-column prop="goods" label="点赞数" width="100" />
             <el-table-column prop="hard" label="成型难度" width="120" />
             <el-table-column prop="authorImg" label="作者头像" width="100" :show-overflow-tooltip="true" />
             <el-table-column prop="label" label="标签" width="100" />
             <el-table-column prop="steadyContent" label="稳健运营" width="150" :show-overflow-tooltip="true" />
-            <el-table-column prop="hexList" label="海克斯列表" width="120" :show-overflow-tooltip="true" />
+            <el-table-column prop="formHexList" label="海克斯列表" width="200" :show-overflow-tooltip="true" />
             <el-table-column prop="chessPosition" label="棋子站位信息" width="130" :show-overflow-tooltip="true" />
             <el-table-column prop="positionContent" label="站位解读" width="120" :show-overflow-tooltip="true" />
-            <el-table-column prop="equipOrder" width="120" label="抢装顺序" :show-overflow-tooltip="true" />
+            <el-table-column prop="formFormulaEquipList" width="120" label="抢装顺序" :show-overflow-tooltip="true" />
             <el-table-column prop="equipContent" label="装备解读" width="120" :show-overflow-tooltip="true" />
             <el-table-column prop="carryChess" label="主C棋子" width="120" />
             <el-table-column prop="otherChess" label="副C棋子" width="120" />
-            <el-table-column prop="searchTime" label="搜卡时机" width="120" show-overflow-tooltip="true" />
-            <el-table-column prop="counterRelation" label="克制关系" width="120" show-overflow-tooltip="true" />
+            <el-table-column prop="searchTime" label="搜卡时机" width="120" :show-overflow-tooltip="true" />
+            <el-table-column prop="counterRelation" label="克制关系" width="120" :show-overflow-tooltip="true" />
             <el-table-column prop="version" label="游戏版本" width="100" />
             <el-table-column prop="season" label="游戏赛季" width="100" />
             <el-table-column fixed="right" label="操作" width="100">
@@ -120,6 +120,9 @@ export default {
   setup() {
     const state = reactive({
       teamList: [],
+      chessList: [],
+      hexList: [],
+      formulaEquipList: [],
       total: 0, // 总条数
       pageNum: 1, // 当前页码数
       pageSize: 10, // 每页大小
@@ -130,7 +133,7 @@ export default {
       editDialogVisible: false,
       curID: 0
     })
-    // 获取棋子列表
+    // 获取阵容列表
     const getTeamList = async () => {
       const { data: res } = await api.getTeams(
         state.pageNum,
@@ -141,6 +144,61 @@ export default {
       )
       state.teamList = res.teams
       state.total = res.total
+      //
+      await getChessList()
+      await getHexList()
+      await getFormulaEquips()
+    }
+    // 获取并重构棋子列表
+    const getChessList = async () => {
+      const { data: res } = await api.getChesses(1, 100, state.searchContent, state.selectValue)
+      state.chessList = res.chesses
+      // 开始重构 teamList中的chessList
+      state.teamList.forEach(item => {
+        const temp = item.chessList.split(',')
+        temp.forEach((ele, index) => {
+          state.chessList.forEach(chess => {
+            if (chess.chessId === parseInt(ele)) {
+              temp[index] = chess.displayName
+            }
+          })
+        })
+        item.formChessList = temp.join(',')
+      })
+    }
+    // 获取并重构hex列表
+    const getHexList = async () => {
+      const { data: res } = await api.getHexes(1, 600, state.searchContent, state.selectValue, 'all')
+      state.hexList = res.hexes
+      // 开始重构 teamList中的hexList
+      state.teamList.forEach(item => {
+        const temp = item.hexList.split(',')
+        temp.forEach((ele, index) => {
+          state.hexList.forEach(hex => {
+            if (hex.hexId === parseInt(ele)) {
+              temp[index] = hex.name
+            }
+          })
+        })
+        item.formHexList = temp.join(',')
+      })
+    }
+    // 获取抢装备列表并重构列表
+    const getFormulaEquips = async () => {
+      const { data: res } = await api.getFormula(state.selectValue)
+      state.formulaEquipList = res.formula
+      // 开始重构 teamList中的equipOrder
+      state.teamList.forEach(item => {
+        const temp = item.equipOrder.split(',')
+        temp.forEach((ele, index) => {
+          state.formulaEquipList.forEach(equip => {
+            if (equip.equipId === parseInt(ele)) {
+              temp[index] = equip.name
+            }
+          })
+        })
+        item.formFormulaEquipList = temp.join(',')
+      })
     }
     // 每页大小改变
     const handleSizeChange = val => {
@@ -228,6 +286,9 @@ export default {
       Edit,
       ...toRefs(state),
       getTeamList,
+      getChessList,
+      getHexList,
+      getFormulaEquips,
       handleSizeChange,
       handleCurrentChange,
       handleSearch,
