@@ -54,19 +54,19 @@
         </div>
       </el-card>
       <AddNews :centerDialogVisible="centerDialogVisible" @onCloseDialog="closeDialogVisible"></AddNews>
-      <EditUser
+      <EditNews
         v-if="editDialogVisible"
         :editDialogVisible="editDialogVisible"
         :curID="curID"
         @onCloseEditDialog="closeEditDialogVisible"
-      ></EditUser>
+      ></EditNews>
     </div>
   </div>
 </template>
 
 <script>
 import AddNews from '@/components/News/AddNews.vue'
-import EditUser from '@/components/User/EditUser.vue'
+import EditNews from '@/components/News/EditNews.vue'
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import api from '@/api/index.js'
@@ -74,7 +74,7 @@ import { onMounted, reactive, toRefs } from 'vue'
 export default {
   components: {
     AddNews,
-    EditUser
+    EditNews
   },
   setup() {
     const state = reactive({
