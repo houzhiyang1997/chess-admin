@@ -109,10 +109,14 @@ export default {
       ],
       content: [{ required: true, message: '请输入新闻内容', trigger: 'blur' }]
     }
-    // 根据id查询用户信息
-    const getUserById = async () => {
-      const { data: res } = await api.getUserById(state.curID)
-      state.editForm = res.user
+    // 根据id查询新闻信息
+    const getNewsById = async () => {
+      const { data: res } = await api.getNewsById(state.curID)
+      state.editForm = res.news
+      // 将内容中的p标签还原为换行符
+      let content = state.editForm.content.split('</p>')
+      content = content.map(item => item.slice(3))
+      state.editForm.content = content.join('\n')
     }
     // 关闭对话框
     const closeDialog = visible => {
@@ -124,7 +128,7 @@ export default {
       editFormRef.value.validate(async valid => {
         if (valid) {
           // 发请求
-          const { data: res } = await api.editUser(state.editForm)
+          const { data: res } = await api.editNews(state.editForm)
           if (res.code === 200) {
             // 成功后 发出关闭对话框请求
             emit('onCloseEditDialog', false, res.count)
@@ -137,14 +141,14 @@ export default {
       })
     }
     onMounted(() => {
-      // getUserById()
+      getNewsById()
     })
     return {
       ...toRefs(state),
       editFormRules,
       closeDialog,
       editFormRef,
-      getUserById,
+      getNewsById,
       submitEdit
     }
   }

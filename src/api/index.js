@@ -317,6 +317,14 @@ const getTeamById = id => {
   })
 }
 
+// 根据id获取 新闻news 信息
+const getNewsById = id => {
+  return http({
+    method: 'GET',
+    url: `/getnewsbyid?id=${id}`
+  })
+}
+
 /* 修改信息 */
 
 // 修改用户信息
@@ -396,6 +404,15 @@ const editTeam = formData => {
   return http({
     method: 'POST',
     url: '/editteam',
+    data: formData
+  })
+}
+
+// 修改 阵容 信息
+const editNews = formData => {
+  return http({
+    method: 'POST',
+    url: '/editnews',
     data: formData
   })
 }
@@ -517,6 +534,7 @@ export default {
   editJob,
   editHero,
   editTeam,
+  editNews,
   deleteUser,
   deleteAdmin,
   deleteChess,
@@ -535,5 +553,6 @@ export default {
   getJobById,
   getHeroById,
   getTeamById,
+  getNewsById,
   login
 }
