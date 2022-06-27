@@ -234,6 +234,15 @@ const addTeam = formData => {
   })
 }
 
+// 添加 新闻news
+const addNews = formData => {
+  return http({
+    method: 'POST',
+    url: '/addnews',
+    data: formData
+  })
+}
+
 /* 根据id获取信息 */
 
 // 根据id获取用户信息
@@ -498,6 +507,7 @@ export default {
   addJob,
   addHero,
   addTeam,
+  addNews,
   editUser,
   editAdmin,
   editChess,
