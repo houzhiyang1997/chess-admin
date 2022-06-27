@@ -31,4 +31,9 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
+.el-popper {
+  font-size: 14px;
+  max-width: 600px;
+}
 </style>

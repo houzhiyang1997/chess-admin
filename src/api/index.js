@@ -129,6 +129,20 @@ const getTeams = (pageNum, pageSize, searchContent, selectContent, labelContent)
   })
 }
 
+// 获取新闻列表 带分页和查询
+const getNews = (pageNum, pageSize, searchContent, selectContent) => {
+  return http({
+    params: {
+      pageNum: pageNum,
+      pageSize: pageSize,
+      searchContent: searchContent,
+      selectContent: selectContent
+    },
+    method: 'GET',
+    url: '/getnews'
+  })
+}
+
 // 获取 formula 列表
 const getFormula = season => {
   return http({
@@ -474,6 +488,7 @@ export default {
   getHeros,
   getTeams,
   getFormula,
+  getNews,
   addUser,
   addAdmin,
   addChess,
