@@ -491,6 +491,14 @@ const deleteTeam = id => {
   })
 }
 
+// 删除 新闻 信息 id
+const deleteNews = id => {
+  return http({
+    method: 'GET',
+    url: `/deletenews?id=${id}`
+  })
+}
+
 // 登录
 const login = (username, password) => {
   return http({
@@ -544,6 +552,7 @@ export default {
   deleteJob,
   deleteHero,
   deleteTeam,
+  deleteNews,
   getUserById,
   getAdminById,
   getChessById,
