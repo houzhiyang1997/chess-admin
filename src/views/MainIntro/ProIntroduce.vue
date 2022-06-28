@@ -1,4 +1,6 @@
-<template>项目介绍</template>
+<template>
+  <div></div>
+</template>
 
 <script>
 export default {}

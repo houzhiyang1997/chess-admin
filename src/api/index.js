@@ -500,14 +500,19 @@ const deleteNews = id => {
 }
 
 // 登录
-const login = (username, password) => {
+const login = formData => {
   return http({
     method: 'POST',
     url: '/login',
-    data: {
-      username: username,
-      password: password
-    }
+    data: formData
+  })
+}
+
+// 获取token用以验证
+const getToken = username => {
+  return http({
+    method: 'GET',
+    url: `/gettoken?username=${username}`
   })
 }
 
@@ -563,5 +568,6 @@ export default {
   getHeroById,
   getTeamById,
   getNewsById,
-  login
+  login,
+  getToken
 }

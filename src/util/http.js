@@ -19,10 +19,10 @@ http.interceptors.request.use(
       text: 'Loading',
       background: 'rgba(0, 0, 0, 0.7)'
     })
-
     return config
   },
   error => {
+    loading.close()
     return Promise.reject(error)
   }
 )

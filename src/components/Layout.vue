@@ -25,156 +25,156 @@
             router
           >
             <!-- 主要介绍 -->
-            <el-sub-menu index="/main-intro">
+            <el-sub-menu index="/home/main-intro">
               <template #title>
                 <el-icon><Location /></el-icon>
                 <span>主要介绍</span>
               </template>
               <!-- 二级菜单 -->
-              <el-menu-item index="/main-intro/prointroduce">
+              <el-menu-item index="/home/main-intro/prointroduce">
                 <el-icon><Location /></el-icon>
                 <span>项目介绍</span>
               </el-menu-item>
-              <el-menu-item index="/main-intro/personinfo">
+              <el-menu-item index="/home/main-intro/personinfo">
                 <el-icon><Location /></el-icon>
                 <span>个人简历</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 用户管理 -->
-            <el-sub-menu index="/user-manage">
+            <el-sub-menu index="/home/user-manage">
               <template #title>
                 <el-icon><User /></el-icon>
                 <span>用户管理</span>
               </template>
               <!-- 二级菜单 -->
-              <el-menu-item index="/user-manage/user">
+              <el-menu-item index="/home/user-manage/user">
                 <el-icon><User /></el-icon>
                 <span>用户设置</span>
               </el-menu-item>
-              <el-menu-item index="/user-manage/admin">
+              <el-menu-item index="/home/user-manage/admin">
                 <el-icon><UserFilled /></el-icon>
                 <span>管理员设置</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 阵容管理 -->
-            <el-sub-menu index="/team-manage">
+            <el-sub-menu index="/home/team-manage">
               <template #title>
                 <el-icon><WindPower /></el-icon>
                 <span>阵容管理</span>
               </template>
               <!-- 二级菜单 -->
-              <el-menu-item index="/team-manage/setting">
+              <el-menu-item index="/home/team-manage/setting">
                 <el-icon><Flag /></el-icon>
                 <span>阵容详情</span>
               </el-menu-item>
-              <el-menu-item index="/team-manage/add" disabled>
+              <el-menu-item index="/home/team-manage/add" disabled>
                 <el-icon><Flag /></el-icon>
                 <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 英雄管理 -->
-            <el-sub-menu index="/chess-manage">
+            <el-sub-menu index="/home/chess-manage">
               <template #title>
                 <el-icon><Star /></el-icon>
                 <span>英雄管理</span>
               </template>
               <!-- 二级菜单 -->
-              <el-menu-item index="/chess-manage/setting">
+              <el-menu-item index="/home/chess-manage/setting">
                 <el-icon><StarFilled /></el-icon>
                 <span>英雄详情</span>
               </el-menu-item>
-              <el-menu-item index="/chess-manage/add" disabled>
+              <el-menu-item index="/home/chess-manage/add" disabled>
                 <el-icon><StarFilled /></el-icon>
                 <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 羁绊管理 -->
-            <el-sub-menu index="/raceandjob">
+            <el-sub-menu index="/home/raceandjob">
               <template #title>
                 <el-icon><Magnet /></el-icon>
                 <span>羁绊管理</span>
               </template>
               <!-- 种族管理 -->
-              <el-sub-menu index="/race-manage">
+              <el-sub-menu index="/home/race-manage">
                 <template #title>
                   <el-icon><PriceTag /></el-icon>
                   <span>种族管理</span>
                 </template>
                 <!-- 种族详情 -->
-                <el-menu-item index="/race-manage/setting">种族详情</el-menu-item>
-                <el-menu-item index="/race-manage/add" disabled>功能接入中</el-menu-item>
+                <el-menu-item index="/home/race-manage/setting">种族详情</el-menu-item>
+                <el-menu-item index="/home/race-manage/add" disabled>功能接入中</el-menu-item>
               </el-sub-menu>
               <!-- 职业管理 -->
-              <el-sub-menu index="/job-manage">
+              <el-sub-menu index="/home/job-manage">
                 <template #title>
                   <el-icon><Suitcase /></el-icon>
                   <span>职业管理</span>
                 </template>
                 <!-- 职业详情 -->
-                <el-menu-item index="/job-manage/setting">职业详情</el-menu-item>
-                <el-menu-item index="/job-manage/add" disabled>功能接入中</el-menu-item>
+                <el-menu-item index="/home/job-manage/setting">职业详情</el-menu-item>
+                <el-menu-item index="/home/job-manage/add" disabled>功能接入中</el-menu-item>
               </el-sub-menu>
             </el-sub-menu>
             <!-- 装备管理 -->
-            <el-sub-menu index="/equip-manage">
+            <el-sub-menu index="/home/equip-manage">
               <template #title>
                 <el-icon><Help /></el-icon>
                 <span>装备管理</span>
               </template>
               <!-- 二级菜单 -->
-              <el-menu-item index="/equip-manage/setting">
+              <el-menu-item index="/home/equip-manage/setting">
                 <el-icon><HelpFilled /></el-icon>
                 <span>装备详情</span>
               </el-menu-item>
-              <el-menu-item index="/equip-manage/add" disabled>
+              <el-menu-item index="/home/equip-manage/add" disabled>
                 <el-icon><HelpFilled /></el-icon>
                 <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 海克斯管理 -->
-            <el-sub-menu index="/hex-manage">
+            <el-sub-menu index="/home/hex-manage">
               <template #title>
                 <el-icon><PictureRounded /></el-icon>
                 <span>海克斯管理</span>
               </template>
               <!-- 二级菜单 -->
-              <el-menu-item index="/hex-manage/setting">
+              <el-menu-item index="/home/hex-manage/setting">
                 <el-icon><PieChart /></el-icon>
                 <span>海克斯详情</span>
               </el-menu-item>
-              <el-menu-item index="/hex-manage/add" disabled>
+              <el-menu-item index="/home/hex-manage/add" disabled>
                 <el-icon><PieChart /></el-icon>
                 <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 小小英雄管理 -->
-            <el-sub-menu index="/small-manage">
+            <el-sub-menu index="/home/small-manage">
               <template #title>
                 <el-icon><Place /></el-icon>
                 <span>小小英雄管理</span>
               </template>
               <!-- 二级菜单 -->
-              <el-menu-item index="/small-manage/setting">
+              <el-menu-item index="/home/small-manage/setting">
                 <el-icon><Place /></el-icon>
                 <span>小小英雄详情</span>
               </el-menu-item>
-              <el-menu-item index="/small-manage/add" disabled>
+              <el-menu-item index="/home/small-manage/add" disabled>
                 <el-icon><Place /></el-icon>
                 <span>功能接入中</span>
               </el-menu-item>
             </el-sub-menu>
             <!-- 新闻管理 -->
-            <el-sub-menu index="/news-manage">
+            <el-sub-menu index="/home/news-manage">
               <template #title>
                 <el-icon><DocumentCopy /></el-icon>
                 <span>新闻管理</span>
               </template>
               <!-- 二级菜单 -->
-              <el-menu-item index="/news-manage/setting">
+              <el-menu-item index="/home/news-manage/setting">
                 <el-icon><Comment /></el-icon>
                 <span>新闻详情</span>
               </el-menu-item>
-              <el-menu-item index="/news-manage/add" disabled>
+              <el-menu-item index="/home/news-manage/add" disabled>
                 <el-icon><Comment /></el-icon>
                 <span>功能接入中</span>
               </el-menu-item>

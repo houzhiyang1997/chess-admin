@@ -1,18 +1,19 @@
 <template>
   <el-config-provider :locale="locale">
-    <Layout></Layout>
+    <!-- <Layout></Layout> -->
+    <router-view></router-view>
   </el-config-provider>
 </template>
 
 <script>
-import Layout from '@/components/Layout.vue'
+// import Layout from '@/components/Layout.vue'
 import { ElConfigProvider } from 'element-plus'
 // 配置中文
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 export default {
   name: 'LayOut',
   components: {
-    Layout,
+    // Layout,
     ElConfigProvider
   },
   setup() {
