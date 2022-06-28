@@ -1,5 +1,17 @@
 import { createStore } from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
+
 export default createStore({
+  plugins: [
+    createPersistedState({
+      // reducer 可以选择存储哪些state
+      reducer: state => {
+        return {
+          adminInfo: state.adminInfo
+        }
+      }
+    })
+  ],
   state: {
     adminInfo: {}
   },

@@ -5,6 +5,9 @@
         <div class="header-container">
           <img src="@/assets/logo-tft.png" alt="LOGO" />
           <span>云顶社区--后台管理系统</span>
+          <div>{{ store.state.adminInfo.nickName }}</div>
+          <img class="h-img" :src="store.state.adminInfo.imgUrl" />
+          <el-button size="small" type="info" @click="handleLogout">退出登录</el-button>
         </div>
       </el-header>
       <el-container>
@@ -191,9 +194,14 @@
 </template>
 
 <script>
+import { ElMessageBox, ElMessage } from 'element-plus'
 import { onMounted, reactive, toRefs } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
   setup() {
+    const store = useStore()
+    const router = useRouter()
     const state = reactive({
       iscollapse: false,
       activePath: ''
@@ -208,9 +216,41 @@ export default {
       state.activePath = index
     }
 
+    const handleLogout = () => {
+      ElMessageBox.confirm('您确认删除该条数据吗?', '重要提醒', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+        callback: async action => {
+          if (action === 'confirm') {
+            // 清除session中的 token 和username
+            window.sessionStorage.clear()
+            // 清除local 中的 adminInfo
+            window.localStorage.clear()
+            //
+            router.push('/login')
+            ElMessage({
+              title: '成功',
+              message: '退出成功',
+              type: 'success'
+            })
+          }
+          if (action === 'cancel') {
+            ElMessage({
+              title: '提示',
+              message: '用户取消',
+              type: 'warning'
+            })
+          }
+        }
+      })
+    }
+
     return {
       ...toRefs(state),
-      selectItem
+      selectItem,
+      handleLogout,
+      store
     }
   }
 }
@@ -231,14 +271,20 @@ body {
       display: flex;
       align-items: center;
       img {
-        margin-left: 30px;
+        margin: 0 15px;
         width: 120px;
         height: 48px;
       }
       span {
         font-size: 20px;
-        padding: 5px 25px;
+        padding: 5px 30px;
         align-self: flex-end;
+        flex: 1;
+      }
+      .h-img {
+        width: 48px;
+        height: 48px;
+        border-radius: 24px;
       }
     }
   }

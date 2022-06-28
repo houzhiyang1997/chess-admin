@@ -139,7 +139,7 @@ router.beforeEach(async (to, from, next) => {
   // 判断是否需要鉴权
   if (to.meta.isAuth) {
     // 如果session中的token和数据库取到的token一致 则通过
-    if (storageToken === realToken) {
+    if (storageToken === realToken && storageToken && realToken) {
       next()
     } else {
       // 否则进入login
