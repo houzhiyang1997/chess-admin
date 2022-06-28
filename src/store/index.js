@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate'
 export default createStore({
   plugins: [
     createPersistedState({
+      key: 'cloudadmin',
       // reducer 可以选择存储哪些state
       reducer: state => {
         return {

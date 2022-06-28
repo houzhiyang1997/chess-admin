@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { ElMessage } from 'element-plus'
 import api from '@/api/index'
 import store from '@/store/index'
 const routes = [
@@ -146,7 +147,19 @@ router.beforeEach(async (to, from, next) => {
       next('/login')
     }
   } else {
-    next()
+    if (to.path === '/login') {
+      if (storageToken && realToken) {
+        next(from)
+        ElMessage({
+          message: '请勿重复登录',
+          type: 'warning'
+        })
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
   }
 })
 

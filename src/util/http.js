@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { ElLoading } from 'element-plus'
-// const http = axios.create({
-//   baseURL: 'http://106.12.140.161:5000',
-//   timeout: 5000
-// })
-
 const http = axios.create({
-  baseURL: 'http://127.0.0.1:5000/admin',
+  baseURL: 'http://106.12.140.161:5000/admin',
   timeout: 5000
 })
+
+// const http = axios.create({
+//   baseURL: 'http://127.0.0.1:5000/admin',
+//   timeout: 5000
+// })
 
 // 拦截器
 let loading = null
